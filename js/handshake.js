@@ -10,42 +10,42 @@ window.sessionStorage.setItem('chainIDLoaded', false)
 // arbitrum and polygon not yet supported
 let chains = [
   {
-    name: 'mainnet',
+    name: "mainnet",
     id: 1,
     explorerBaseUrl: "https://etherscan.io/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
   },
   {
-    name: 'sepolia',
+    name: "sepolia",
     id: 11155111,
     explorerBaseUrl: "https://sepolia.etherscan.io/address/",
-    contractAddress: "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb"
+    contractAddress: "0x0E6b7e647Ac52Fc636B678213dEbd0C21E0b1a58",
   },
   {
-    name: 'optimism',
+    name: "optimism",
     id: 10,
     explorerBaseUrl: "https://optimistic.etherscan.io/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
   },
   {
-    name: 'base',
+    name: "base",
     id: 8453,
     explorerBaseUrl: "https://basescan.org/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
   },
   {
-    name: 'arbitrum',
+    name: "arbitrum",
     id: 42161,
     explorerBaseUrl: "https://arbiscan.io/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
   },
   {
-    name: 'polygon',
+    name: "polygon",
     id: 137,
     explorerBaseUrl: "https://polygonscan.com/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
   },
-]
+];
 
 var chainParams = new URLSearchParams(window.location.search)
 let EE_ADDRESS
