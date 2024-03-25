@@ -66,7 +66,7 @@ if(chainParams.has("chain")) {
   } else {
     //Use default (mainnet)
     chainIndex = 0
-    EE_ADDRESS = "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb"
+    EE_ADDRESS = "0x0E6b7e647Ac52Fc636B678213dEbd0C21E0b1a58";
   }
 }
 const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contractAddress);
