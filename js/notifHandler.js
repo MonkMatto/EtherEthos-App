@@ -14,7 +14,6 @@ const createErrorMsg = (msg) => {
     errorBody.className = 'fixed bottom-0 left-0 w-full h-12 z-100 px-5 flex items-center justify-between bg-red'
     errorMsg.setAttribute('class', 'text-base')
 
-    // statusMsg.setAttribute('class', '')
     closeButton.setAttribute('class', 'w-1/10 aspect-square bg-red-400')
     
     //fill message text
