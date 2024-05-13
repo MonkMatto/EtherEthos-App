@@ -54,6 +54,12 @@ let chains = [
     explorerBaseUrl: "https://zora.superscan.network/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
   },
+  {
+    name: 'blast',
+    id: 81457,
+    explorerBaseUrl: "https://blastexplorer.io/address/",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
+  },
 ]
 
 var chainParams = new URLSearchParams(window.location.search)

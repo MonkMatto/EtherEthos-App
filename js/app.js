@@ -421,7 +421,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 return;
               }
             });
-          }
+          } 
 
           /// add other chains here
 
