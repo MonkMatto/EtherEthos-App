@@ -258,6 +258,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
   }
 
   async function _queryContract(account) {
+    console.log('_queryContract() firing')
     if(currentAccount) {
       console.log(`account ${account}, currentAccount ${currentAccount}`)
       if (account.toLowerCase() == currentAccount.toLowerCase()) {
@@ -385,6 +386,41 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 return;
               }
             });
+          } else if (chain == "optimism") {
+            eeArray = await EE_Contract_Alchemy_Optimism.methods.assembleAccountData(account).call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+          } else if (chain == "base") {
+            eeArray = await EE_Contract_Alchemy_Base.methods.assembleAccountData(account).call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+          } else if (chain == "arbitrum") {
+            eeArray = await EE_Contract_Alchemy_Arbitrum.methods.assembleAccountData(account).call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+          } else if (chain == "polygon") {
+            eeArray = await EE_Contract_Alchemy_Polygon.methods.assembleAccountData(account).call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+          } else if (chain == "zora") {
+            eeArray = await EE_Contract_Alchemy_Zora.methods.assembleAccountData(account).call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
           }
 
           /// add other chains here
@@ -421,6 +457,11 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
               
               const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
               const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Optimism = new web3Optimism.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Base = new web3Base.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Arbitrum = new web3Arbitrum.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Polygon = new web3Polygon.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Zora = new web3Zora.eth.Contract(NFT_ABI, eeArray[0][6]);
               // add other chains here?
 
               let pfpOwner;
@@ -436,6 +477,41 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                   });
                 } else if (chain == "sepolia") {
                   pfpOwner = await EE_NFTContract_Alchemy_Sepolia.methods.ownerOf(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "optimism") {
+                  pfpOwner = await EE_NFTContract_Alchemy_Optimism.methods.ownerOf(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "base") {
+                  pfpOwner = await EE_NFTContract_Alchemy_Base.methods.ownerOf(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "arbitrum") {
+                  pfpOwner = await EE_NFTContract_Alchemy_Arbitrum.methods.ownerOf(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "polygon") {
+                  pfpOwner = await EE_NFTContract_Alchemy_Polygon.methods.ownerOf(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "zora") {
+                  pfpOwner = await EE_NFTContract_Alchemy_Zora.methods.ownerOf(tokenId).call({}, function (err, res) {
                     if (err) {
                       console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
                       return;
@@ -477,7 +553,42 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                       return;
                     }
                   });
-                }
+                } else if (chain == "optimism") {
+                  tokenURI = await EE_NFTContract_Alchemy_Optimism.methods.tokenURI(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "base") {
+                  tokenURI = await EE_NFTContract_Alchemy_Base.methods.tokenURI(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "arbitrum") {
+                  tokenURI = await EE_NFTContract_Alchemy_Arbitrum.methods.tokenURI(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "polygon") {
+                  tokenURI = await EE_NFTContract_Alchemy_Polygon.methods.tokenURI(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } else if (chain == "zora") {
+                  tokenURI = await EE_NFTContract_Alchemy_Zora.methods.tokenURI(tokenId).call({}, function (err, res) {
+                    if (err) {
+                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                      return;
+                    }
+                  });
+                } 
 
                 /// add other chains here
 
@@ -957,7 +1068,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         }
         
       }
-      // mainIsVisible(true);
     }
   }
 

@@ -3,6 +3,9 @@ const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`
 const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`);
 const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`);
 const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`);
+const web3Arbitrum = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`);
+const web3Polygon = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`);
+const web3Zora = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`);
 let currentChain = null;
 let currentAccount = null;
 window.sessionStorage.setItem('chainIDLoaded', false)
@@ -79,6 +82,9 @@ const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contract
 const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, chains[1].contractAddress);
 const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, chains[2].contractAddress);
 const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
+const EE_Contract_Alchemy_Arbitrum = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
+const EE_Contract_Alchemy_Polygon = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
+const EE_Contract_Alchemy_Zora = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
 
 const connectButton = document.querySelector("[data-connect]");
 const connectButtonText = document.querySelector("[data-connect] span");
@@ -104,6 +110,7 @@ getProvider();
 function startApp(provider) {
   if (provider !== window.ethereum) {
     console.error("Do you have multiple wallets installed?");
+    createErrorMsg("Error! Do you have multiple wallets installed?")
   }
   web3User = new Web3(provider); // Initialize user's web3
 
