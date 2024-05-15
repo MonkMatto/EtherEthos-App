@@ -261,7 +261,8 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
     console.log('_queryContract() firing')
     if(currentAccount) {
       console.log(`account ${account}, currentAccount ${currentAccount}`)
-      if (account.toLowerCase() == currentAccount.toLowerCase()) {
+      queriedChain = chains.find(o => o.name === chain)
+      if (account.toLowerCase() == currentAccount.toLowerCase() && currentChainId == queriedChain.id) {
         accountPermitted = true
         if (edit_btn.classList.contains("hidden")) {
           edit_btn.classList.remove("hidden");

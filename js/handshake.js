@@ -88,9 +88,9 @@ const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contract
 const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, chains[1].contractAddress);
 const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, chains[2].contractAddress);
 const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
-const EE_Contract_Alchemy_Arbitrum = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
-const EE_Contract_Alchemy_Polygon = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
-const EE_Contract_Alchemy_Zora = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
+const EE_Contract_Alchemy_Arbitrum = new web3Base.eth.Contract(EE_ABI, chains[4].contractAddress);
+const EE_Contract_Alchemy_Polygon = new web3Base.eth.Contract(EE_ABI, chains[5].contractAddress);
+const EE_Contract_Alchemy_Zora = new web3Base.eth.Contract(EE_ABI, chains[6].contractAddress);
 
 const connectButton = document.querySelector("[data-connect]");
 const connectButtonText = document.querySelector("[data-connect] span");

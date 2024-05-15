@@ -136,9 +136,9 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
             if(index == priorityIndex) {
                 //show is already favorite
                 var thisIsFave = document.createElement('button')
-                thisIsFave.setAttribute('class', 'mx-2 h-7 aspect-square rounded-full p-0')
+                thisIsFave.setAttribute('class', 'mx-2 h-7 w-7 rounded-full p-0')
                 var isFaveImg = document.createElement('img')
-                isFaveImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                isFaveImg.setAttribute('class', 'm-auto h-full w-full object-contain')
                 isFaveImg.setAttribute('src', './svg/star-full.svg')
                 isFaveImg.setAttribute('alt', 'Wallet Logo')
                 thisIsFave.appendChild(isFaveImg)
