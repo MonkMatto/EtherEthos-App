@@ -3,6 +3,9 @@ const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`
 const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`);
 const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`);
 const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`);
+const web3Arbitrum = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`);
+const web3Polygon = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`);
+const web3Zora = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`);
 let currentChain = null;
 let currentAccount = null;
 window.sessionStorage.setItem('chainIDLoaded', false)
@@ -10,42 +13,54 @@ window.sessionStorage.setItem('chainIDLoaded', false)
 // arbitrum and polygon not yet supported
 let chains = [
   {
-    name: "mainnet",
+    name: 'mainnet',
     id: 1,
     explorerBaseUrl: "https://etherscan.io/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
   },
   {
-    name: "sepolia",
+    name: 'sepolia',
     id: 11155111,
     explorerBaseUrl: "https://sepolia.etherscan.io/address/",
-    contractAddress: "0x0E6b7e647Ac52Fc636B678213dEbd0C21E0b1a58",
+    contractAddress: "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb"
   },
   {
-    name: "optimism",
+    name: 'optimism',
     id: 10,
     explorerBaseUrl: "https://optimistic.etherscan.io/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
   },
   {
-    name: "base",
+    name: 'base',
     id: 8453,
     explorerBaseUrl: "https://basescan.org/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
   },
   {
-    name: "arbitrum",
+    name: 'arbitrum',
     id: 42161,
     explorerBaseUrl: "https://arbiscan.io/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
   },
   {
-    name: "polygon",
+    name: 'polygon',
     id: 137,
     explorerBaseUrl: "https://polygonscan.com/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
   },
-];
+  {
+    name: 'zora',
+    id: 7777777,
+    explorerBaseUrl: "https://zora.superscan.network/address/",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
+  },
+  {
+    name: 'blast',
+    id: 81457,
+    explorerBaseUrl: "https://blastexplorer.io/address/",
+    contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909"
+  },
+]
 
 var chainParams = new URLSearchParams(window.location.search)
 let EE_ADDRESS
@@ -73,6 +88,9 @@ const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contract
 const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, chains[1].contractAddress);
 const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, chains[2].contractAddress);
 const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
+const EE_Contract_Alchemy_Arbitrum = new web3Base.eth.Contract(EE_ABI, chains[4].contractAddress);
+const EE_Contract_Alchemy_Polygon = new web3Base.eth.Contract(EE_ABI, chains[5].contractAddress);
+const EE_Contract_Alchemy_Zora = new web3Base.eth.Contract(EE_ABI, chains[6].contractAddress);
 
 const connectButton = document.querySelector("[data-connect]");
 const connectButtonText = document.querySelector("[data-connect] span");
@@ -98,6 +116,7 @@ getProvider();
 function startApp(provider) {
   if (provider !== window.ethereum) {
     console.error("Do you have multiple wallets installed?");
+    createErrorMsg("Error! Do you have multiple wallets installed?")
   }
   web3User = new Web3(provider); // Initialize user's web3
 
