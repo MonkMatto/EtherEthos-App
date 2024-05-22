@@ -145,6 +145,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
   //set chain dropdown to current chain
   if(searchParams.get("chain")) {
     searchNetwork.setAttribute('selected', searchParams.get("chain"))
+    console.log(searchParams)
   } else {
     window.addEventListener('load', ()=> {
       searchNetwork.setAttribute('selected', searchParams.get("chain"))
@@ -169,7 +170,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         chainContent.forEach((element) => {
           element.textContent = `(${chain})`;
         });
-        contractLink.href = chainScan + EE_ADDRESS + "#code";
+        contractLink.href = chainScan + currentNetwork.contractAddress + "#code";
         if (account) {
           _queryContract(account);
         }
@@ -198,7 +199,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           chainContent.forEach((element) => {
             element.textContent = `(${chain})`;
           });
-          contractLink.href = chainScan + EE_ADDRESS + "#code";
+          contractLink.href = chainScan + currentNetwork.contractAddress + "#code";
           if (account) {
             _queryContract(account);
           }
