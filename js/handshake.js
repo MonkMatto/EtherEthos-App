@@ -10,7 +10,7 @@ let currentChain = null;
 let currentAccount = null;
 window.sessionStorage.setItem('chainIDLoaded', false)
 
-// arbitrum and polygon not yet supported
+// blast not yet supported
 let chains = [
   {
     name: 'mainnet',
@@ -64,26 +64,30 @@ let chains = [
 
 var chainParams = new URLSearchParams(window.location.search)
 let EE_ADDRESS
-if(chainParams.has("chain")) {
-  //Find contract address based on search query
-  var findChainID = chains.find(o => o.id === Number(chainParams.get("chain")))
-  chainIndex = chains.indexOf(findChainID);
-  EE_ADDRESS = chains[chainIndex].contractAddress
-} else {
-  if(currentAccount) {
-    //Find contract address based on wallet chainID
-    window.addEventListener('load', ()=>{
-      var findChainID = chains.find(o => o.id === Number(chainParams.get("chain")))
-      chainIndex = chains.indexOf(findChainID);
-      EE_ADDRESS = chains[chainIndex].contractAddress
+// if(chainParams.has("chain")) {
+//   //Find contract address based on search query
+//   var findChainID = chains.find(o => o.id === Number(chainParams.get("chain")))
+//   chainIndex = chains.indexOf(findChainID);
+//   EE_ADDRESS = chains[chainIndex].contractAddress
+// } else {
+//   console.log('trying to use network from metamask')
+//   if(currentAccount) {
+//     //Find contract address based on wallet chainID
+//     window.addEventListener('load', ()=>{
+//       var findChainID = chains.find(o => o.id === Number(chainParams.get("chain")))
+//       chainIndex = chains.indexOf(findChainID);
+//       EE_ADDRESS = chains[chainIndex].contractAddress
       
-    })
-  } else {
-    //Use default (mainnet)
-    chainIndex = 0
-    EE_ADDRESS = "0x0E6b7e647Ac52Fc636B678213dEbd0C21E0b1a58";
-  }
-}
+//     })
+//     console.log('successfully used network from metamask, ' + chains[chainIndex].name)
+//   } else {
+//     //Use default (mainnet)
+//     console.log('defaulted to mainnet')
+//     createStatusMsg('defaulted to mainnet')
+//     chainIndex = 0
+//     EE_ADDRESS = "0x1f4126A9D34811E55B9506F011aC1df1396ac909";
+//   }
+// }
 const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contractAddress);
 const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, chains[1].contractAddress);
 const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, chains[2].contractAddress);

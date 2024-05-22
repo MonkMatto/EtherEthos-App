@@ -55,7 +55,13 @@ const createStatusMsg = (msg) => {
     closeButton.setAttribute('class', 'w-1/10 aspect-square bg-red-400')
     
     //fill message text
-    statusMsg.innerHTML = 'Sending transaction to wallet...'
+    if(!msg) {
+        statusMsg.innerHTML = 'Sending transaction to wallet...'
+        
+    } else {
+        
+        statusMsg.innerHTML = msg
+    }
     statusBody.appendChild(statusMsg)
     
     //button event
