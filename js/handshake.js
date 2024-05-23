@@ -82,7 +82,6 @@ if (chainParams.has("chain")) {
   } else {
     //Use default (mainnet)
     console.log("defaulted to mainnet");
-    createStatusMsg("defaulted to mainnet");
     chainIndex = 0;
     EE_ADDRESS = "0x1f4126A9D34811E55B9506F011aC1df1396ac909";
   }
@@ -176,13 +175,20 @@ function handleError(error) {
 
 function connectWallet() {
   if (!currentAccount) {
-    //initial connection
-    ethereum
-      .request({ method: "eth_requestAccounts" })
-      .then(!currentAccount ? handleAccountsChanged : () => {})
-      .catch(handleError);
+    // Check if the reload has already happened in this session
+    if (!sessionStorage.getItem("walletConnected")) {
+      // Initial connection
+      ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then(!currentAccount ? handleAccountsChanged : () => {})
+        .catch(handleError)
+        .finally(() => {
+          sessionStorage.setItem("walletConnected", "true");
+          window.location.reload();
+        });
+    }
   } else {
-    //connect new account
+    // Connect new account
     ethereum
       .request({
         method: "wallet_requestPermissions",
