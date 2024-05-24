@@ -5,13 +5,12 @@ let composable, accountIsBlocked, moderator, verificationResponse, perms, compos
 // let chainNames = ["mainnet", "sepolia", "optimism", "base", "arbitrum", "polygon"];
 // let chainExplorerBaseUrls = ["https://etherscan.io/address/", "https://sepolia.etherscan.io/address/", "https://optimistic.etherscan.io/address/", "https://basescan.org/address/", "https://arbiscan.io/address/", "https://polygonscan.com/address/"];
 
-
 let chainScan;
 let BLONKSsvg;
-let blonksPlaceholder
-let accountPermitted = null
+let blonksPlaceholder;
+let accountPermitted = null;
 //set up url params
-const searchParams = new URLSearchParams(window.location.search)
+const searchParams = new URLSearchParams(window.location.search);
 let rawAccount = "";
 const hexPat = /^0[xX]{1}[a-fA-F0-9]{40}$/;
 const currentUrl = new URL(window.location.href);
@@ -46,7 +45,6 @@ const accountEditComposableElementFalse = document.querySelector("[data-edit-com
 const accountComposableSection = document.querySelector("[data-view-section=composable]");
 const accountComposableTooltip = document.getElementById("composable-tooltip");
 const accountEditComposableTooltip = document.getElementById("edit-composable-tooltip");
-
 
 const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
 const accountEditBlockedElement = document.querySelector("[data-edit-section=blocked]");
@@ -97,34 +95,28 @@ const customContainer = document.querySelector("[data-content=custom]");
 const pingModule = document.querySelector("[data-module=ping]");
 const pingContainer = document.querySelector("[data-content=ping]");
 
-
-
-
 // Function to validate Ethereum address
 function isValidEthereumAddress(address) {
   return address.match(hexPat);
 }
 
-
 //only run when home page or on profile page, else only handle account
-if(window.location.pathname == '/' || window.location.pathname.includes('address')) {
-  
-
+if (window.location.pathname == "/" || window.location.pathname.includes("address")) {
   // Function to toggle visibility based on Ethereum address validity
   function mainIsVisible(isValid) {
     console.log("Toggling visibility based on address validity..." + isValid);
-      if (isValid) {
-        mainContent.classList.remove("hidden");
-        view_btn.classList.remove("hidden");
-      } else {
-        mainContent.classList.add("hidden");
-      }
+    if (isValid) {
+      mainContent.classList.remove("hidden");
+      view_btn.classList.remove("hidden");
+    } else {
+      mainContent.classList.add("hidden");
+    }
   }
 
   function abbreviateAndUpdate(account) {
     abbrvAccount = `${account.slice(0, 4)}-${account.slice(-4)}`;
     accountNameElements.forEach((element) => {
-      element.textContent = abbrvAccount; 
+      element.textContent = abbrvAccount;
     });
   }
 
@@ -139,30 +131,27 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
     }
   }
 
-
-
-
   //set chain dropdown to current chain
-  if(searchParams.get("chain")) {
-    searchNetwork.setAttribute('selected', searchParams.get("chain"))
-    console.log(searchParams)
+  if (searchParams.get("chain")) {
+    searchNetwork.setAttribute("selected", searchParams.get("chain"));
+    console.log(searchParams);
   } else {
-    window.addEventListener('load', ()=> {
-      searchNetwork.setAttribute('selected', searchParams.get("chain"))
-    })
+    window.addEventListener("load", () => {
+      searchNetwork.setAttribute("selected", searchParams.get("chain"));
+    });
   }
 
   if (searchParams.get("chain")) {
-    window.addEventListener('load', ()=> {
+    window.addEventListener("load", () => {
       //use search params chainID
-      const chainInput = searchParams.get("chain")
-      var hasID = chains.find(o => o.id === Number(chainInput))
-      console.log(hasID)
+      const chainInput = searchParams.get("chain");
+      var hasID = chains.find((o) => o.id === Number(chainInput));
+      console.log(hasID);
       chainIndex = chains.indexOf(hasID);
-      console.log('chainIndex ' + chainIndex)
-      console.log('chain input: ' + chainInput)
+      console.log("chainIndex " + chainIndex);
+      console.log("chain input: " + chainInput);
       if (chainIndex > -1) {
-        var currentNetwork = chains[chainIndex]
+        var currentNetwork = chains[chainIndex];
         //set contract address for chain
         chain = currentNetwork.name;
         chainScan = currentNetwork.explorerBaseUrl;
@@ -174,64 +163,58 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         if (account) {
           _queryContract(account);
         }
-        
-        var chainText = document.getElementById('chain-display')
-        chainText.innerHTML = '(' + chain + ')';
-        chainText.className = ''
 
+        var chainText = document.getElementById("chain-display");
+        chainText.innerHTML = "(" + chain + ")";
+        chainText.className = "";
       } else {
-        
-        console.log('exception ' + account)
-        applyQuery(account)
+        console.log("exception " + account);
+        applyQuery(account);
       }
-    })
+    });
   } else {
     // currentChainId is aynsc, so we need to wait for it to be set before we can use it
-    window.addEventListener('load', ()=>{
-        var hasID = chains.find(o => o.id === Number(currentChainId))
-        chainIndex = chains.indexOf(hasID);
-        console.log('chainIndex ' + chainIndex)
-        if (chainIndex > -1) {
-          var currentNetwork = chains[chainIndex]
-          chain = currentNetwork.name;
-          chainScan = currentNetwork.explorerBaseUrl;
-          console.log("Chain detected: " + chain);
-          chainContent.forEach((element) => {
-            element.textContent = `(${chain})`;
-          });
-          contractLink.href = chainScan + currentNetwork.contractAddress + "#code";
-          if (account) {
-            _queryContract(account);
-          }
-
-          var chainText = document.getElementById('chain-display')
-          chainText.innerHTML = '(' + chain + ')';
-
-        } else {
-          applyQuery(account)
+    window.addEventListener("load", () => {
+      var hasID = chains.find((o) => o.id === Number(currentChainId));
+      chainIndex = chains.indexOf(hasID);
+      console.log("chainIndex " + chainIndex);
+      if (chainIndex > -1) {
+        var currentNetwork = chains[chainIndex];
+        chain = currentNetwork.name;
+        chainScan = currentNetwork.explorerBaseUrl;
+        console.log("Chain detected: " + chain);
+        chainContent.forEach((element) => {
+          element.textContent = `(${chain})`;
+        });
+        contractLink.href = chainScan + currentNetwork.contractAddress + "#code";
+        if (account) {
+          _queryContract(account);
         }
-    })
 
-
+        var chainText = document.getElementById("chain-display");
+        chainText.innerHTML = "(" + chain + ")";
+      } else {
+        applyQuery(account);
+      }
+    });
   }
 
   //refresh page when user changes networks from metamask
   window.ethereum.on("chainChanged", (chainId) => {
-    window.location.reload()
-  })
+    window.location.reload();
+  });
 
   function applyQuery() {
     //only run after query and chain ID are present
-    console.log('search params are ' + searchParams)
+    console.log("search params are " + searchParams);
     //search if there is an address in the url params
-    account = searchParams.get('address')
-    console.log(account)
-    if(account && isValidEthereumAddress(account)) {
-        abbreviateAndUpdate(account);
-        _queryContract(account)
-        mainIsVisible(true);
+    account = searchParams.get("address");
+    console.log(account);
+    if (account && isValidEthereumAddress(account)) {
+      abbreviateAndUpdate(account);
+      _queryContract(account);
+      mainIsVisible(true);
     }
-        
   }
 
   // Attach event listener to search button for Ethereum address validation and feedback
@@ -241,15 +224,15 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       const isValid = isValidEthereumAddress(searchInput.value);
       if (isValid) {
         //grab address
-        searchParams.set('address', searchInput.value)
+        searchParams.set("address", searchInput.value);
         //grab network if one is selected
-        if(searchNetwork.value) {
-          searchParams.set('chain', searchNetwork.value)
-          console.log(searchNetwork.value)
+        if (searchNetwork.value) {
+          searchParams.set("chain", searchNetwork.value);
+          console.log(searchNetwork.value);
         } else {
-          searchParams.delete('chain')
+          searchParams.delete("chain");
         }
-        window.location.search = searchParams
+        window.location.search = searchParams;
       } else {
         // Notify the user if the Ethereum address is invalid
         alert("Please enter a valid Ethereum address, 0x...");
@@ -259,26 +242,25 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
   }
 
   async function _queryContract(account) {
-    console.log('_queryContract() firing')
-    if(currentAccount) {
-      console.log(`account ${account}, currentAccount ${currentAccount}`)
-      queriedChain = chains.find(o => o.name === chain)
+    console.log("_queryContract() firing");
+    if (currentAccount) {
+      console.log(`account ${account}, currentAccount ${currentAccount}`);
+      queriedChain = chains.find((o) => o.name === chain);
       if (account.toLowerCase() == currentAccount.toLowerCase() && currentChainId == queriedChain.id) {
-        accountPermitted = true
+        accountPermitted = true;
         if (edit_btn.classList.contains("hidden")) {
           edit_btn.classList.remove("hidden");
-          
         }
       } else {
         if (!edit_btn.classList.contains("hidden")) {
           edit_btn.classList.add("hidden");
-          console.log('hiding edit')
+          console.log("hiding edit");
         }
       }
     } else {
       if (!edit_btn.classList.contains("hidden")) {
         edit_btn.classList.add("hidden");
-        console.log('hiding edit')
+        console.log("hiding edit");
       }
     }
     console.log("Querying contract for account: " + account);
@@ -300,34 +282,30 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
               return;
             }
           });
-        } 
-        
+        }
+
         /// add other chains here
 
         ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
-        
+
         // Handle address copy link
         function buildCopyAccount(a) {
-          if(a) {
-            a.addEventListener('click', ()=> {
-              navigator.clipboard.writeText(account)
-            })
-            a.addEventListener('mouseover', () => {
-              a.style.cursor = "pointer"
-            })
-            a.addEventListener('mouseout', () => {
-              a.style.cursor = ""
-            })
+          if (a) {
+            a.addEventListener("click", () => {
+              navigator.clipboard.writeText(account);
+            });
+            a.addEventListener("mouseover", () => {
+              a.style.cursor = "pointer";
+            });
+            a.addEventListener("mouseout", () => {
+              a.style.cursor = "";
+            });
           }
         }
-        const copyAccount = document.getElementById('account-copy')
-        const copyAccountEdit = document.getElementById('edit-account-copy')
-        buildCopyAccount(copyAccount)
-        buildCopyAccount(copyAccountEdit)
-        
-
-        
-
+        const copyAccount = document.getElementById("account-copy");
+        const copyAccountEdit = document.getElementById("edit-account-copy");
+        buildCopyAccount(copyAccount);
+        buildCopyAccount(copyAccountEdit);
 
         // Handle composable icons and tooltip
         console.log("Permissions retrieved: ", permissions);
@@ -358,16 +336,16 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         }
         if (verificationResponse.length > 0) {
           accountVerificationElement.textContent = verificationResponse;
-          console.log(verificationResponse)
+          console.log(verificationResponse);
         } else {
           accountVerificationElement.textContent = "[nothing set]";
         }
         console.log(accountStatus);
         accountStatusElement.forEach((element) => {
-          element.textContent = accountStatus; 
+          element.textContent = accountStatus;
         });
-        accountComposableTooltip.textContent = accountStatus
-        accountEditComposableTooltip.textContent = accountStatus
+        accountComposableTooltip.textContent = accountStatus;
+        accountEditComposableTooltip.textContent = accountStatus;
       } catch (errorMessage) {
         error = true;
       }
@@ -423,10 +401,9 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 return;
               }
             });
-          } 
+          }
 
           /// add other chains here
-
         } catch (errorMessage) {
           error = true;
         }
@@ -436,15 +413,15 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       } else {
         //toggle composablility button should be available on either condition
         console.log("Account Retrieved");
-        var composableButton = document.getElementById('composable-button')
-          composableButton.addEventListener('click', () => {
-              console.log('toggling composability')
-              toggleComposableToContract()
-        })
-        
+        var composableButton = document.getElementById("composable-button");
+        composableButton.addEventListener("click", () => {
+          console.log("toggling composability");
+          toggleComposableToContract();
+        });
+
         if (composable) {
           console.log(eeArray);
-          prepopulate(eeArray, verificationResponse, accountPermitted, chainScan)
+          prepopulate(eeArray, verificationResponse, accountPermitted, chainScan);
           basicData.style.display = "block";
 
           // PFP DATA
@@ -452,11 +429,10 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             pfpContract.textContent = eeArray[0][6];
             pfpContract.href = `${siteBase}?address=${eeArray[0][6]}`;
             let tokenId = parseInt(eeArray[0][7]);
-            if (typeof tokenId === 'number') {
+            if (typeof tokenId === "number") {
               console.log("Token ID: ", tokenId);
               pfpId.textContent = tokenId;
-              
-              
+
               const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
               const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
               const EE_NFTContract_Alchemy_Optimism = new web3Optimism.eth.Contract(NFT_ABI, eeArray[0][6]);
@@ -523,7 +499,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 console.log("PFP Owner: ", pfpOwner);
 
                 /// add other chains here
-
               } catch (errorMessage) {
                 error = true;
               }
@@ -590,15 +565,13 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                       return;
                     }
                   });
-                } 
+                }
 
                 /// add other chains here
-
               } catch (errorMessage) {
                 error = true;
               }
               if (!error) {
-
                 // Function to check the string and parse the image value
                 async function parseTokenURI(tokenURI) {
                   let imageData = "";
@@ -620,8 +593,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
 
                 parseTokenURI(tokenURI)
                   .then((imageData) => {
-                    
-                    
                     if (!pfpcontainer || !editPfpContainer) {
                       console.error("Container not found");
                       return;
@@ -633,7 +604,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                       // For base64 images, use an <img> tag
                       const img = document.createElement("img");
                       img.src = imageData;
-                      
+
                       pfpcontainer.innerHTML = ""; // Clear the container
                       pfpcontainer.appendChild(img);
                       editPfpContainer.innerHTML = ""; // Clear the edit container
@@ -672,64 +643,64 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           detail.textContent = eeArray[0][1];
 
           // Social, Website, Gallery
-          var profileLinkContainer = document.getElementById('profile-links')
+          var profileLinkContainer = document.getElementById("profile-links");
 
-          const socialDiv = document.createElement('div')
-          socialDiv.setAttribute('class', 'mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]')
-          const socialName = document.createElement('h5')
-          socialName.setAttribute('class', 'mb-2 lg:mb-0')
-          socialName.textContent = 'Social:'
-          socialDiv.appendChild(socialName)
-          const social = document.createElement('code')
-          const socialAnchor = document.createElement('a')
-          socialAnchor.setAttribute('data-content', 'website')
-          socialAnchor.setAttribute('target', eeArray[0][2])
-          social.appendChild(socialAnchor)
-          social.setAttribute('class', 'underline')
+          const socialDiv = document.createElement("div");
+          socialDiv.setAttribute("class", "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]");
+          const socialName = document.createElement("h5");
+          socialName.setAttribute("class", "mb-2 lg:mb-0");
+          socialName.textContent = "Social:";
+          socialDiv.appendChild(socialName);
+          const social = document.createElement("code");
+          const socialAnchor = document.createElement("a");
+          socialAnchor.setAttribute("data-content", "website");
+          socialAnchor.setAttribute("target", eeArray[0][2]);
+          social.appendChild(socialAnchor);
+          social.setAttribute("class", "underline");
           socialAnchor.textContent = eeArray[0][2];
           socialAnchor.setAttribute("href", eeArray[0][2]);
-          socialDiv.appendChild(social)
+          socialDiv.appendChild(social);
 
-          const websiteDiv = document.createElement('div')
-          websiteDiv.setAttribute('class', 'mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]')
-          const websiteName = document.createElement('h5')
-          websiteName.setAttribute('class', 'mb-2 lg:mb-0')
-          websiteName.textContent = 'Website:'
-          websiteDiv.appendChild(websiteName)
-          const website = document.createElement('code')
-          const websiteAnchor = document.createElement('a')
-          websiteAnchor.setAttribute('data-content', 'website')
-          websiteAnchor.setAttribute('target', eeArray[0][3])
-          website.appendChild(websiteAnchor)
-          website.setAttribute('class', 'underline')
+          const websiteDiv = document.createElement("div");
+          websiteDiv.setAttribute("class", "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]");
+          const websiteName = document.createElement("h5");
+          websiteName.setAttribute("class", "mb-2 lg:mb-0");
+          websiteName.textContent = "Website:";
+          websiteDiv.appendChild(websiteName);
+          const website = document.createElement("code");
+          const websiteAnchor = document.createElement("a");
+          websiteAnchor.setAttribute("data-content", "website");
+          websiteAnchor.setAttribute("target", eeArray[0][3]);
+          website.appendChild(websiteAnchor);
+          website.setAttribute("class", "underline");
           websiteAnchor.textContent = eeArray[0][3];
           websiteAnchor.setAttribute("href", eeArray[0][3]);
-          websiteDiv.appendChild(website)
+          websiteDiv.appendChild(website);
 
-          const galleryDiv = document.createElement('div')
-          galleryDiv.setAttribute('class', 'mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]')
-          const galleryName = document.createElement('h5')
-          galleryName.setAttribute('class', 'mb-2 lg:mb-0')
-          galleryName.textContent = 'Gallery:'
-          galleryDiv.appendChild(galleryName)
-          const gallery = document.createElement('code')
-          const galleryAnchor = document.createElement('a')
-          galleryAnchor.setAttribute('data-content', 'website')
-          galleryAnchor.setAttribute('target', eeArray[0][4])
-          gallery.appendChild(galleryAnchor)
-          gallery.setAttribute('class', 'underline')
+          const galleryDiv = document.createElement("div");
+          galleryDiv.setAttribute("class", "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]");
+          const galleryName = document.createElement("h5");
+          galleryName.setAttribute("class", "mb-2 lg:mb-0");
+          galleryName.textContent = "Gallery:";
+          galleryDiv.appendChild(galleryName);
+          const gallery = document.createElement("code");
+          const galleryAnchor = document.createElement("a");
+          galleryAnchor.setAttribute("data-content", "website");
+          galleryAnchor.setAttribute("target", eeArray[0][4]);
+          gallery.appendChild(galleryAnchor);
+          gallery.setAttribute("class", "underline");
           galleryAnchor.textContent = eeArray[0][4];
           galleryAnchor.setAttribute("href", eeArray[0][4]);
-          galleryDiv.appendChild(gallery)
-          
+          galleryDiv.appendChild(gallery);
+
           //dynamic population based on link priority
-          var links = [socialDiv, websiteDiv, galleryDiv]
+          var links = [socialDiv, websiteDiv, galleryDiv];
           //populate the priority link
-          var priorityIndex = eeArray[0][5]
-          profileLinkContainer.appendChild(links[priorityIndex])
-          for(let i = 0; i < links.length; i++) {
-            if(i != priorityIndex) {
-              profileLinkContainer.appendChild(links[i])
+          var priorityIndex = eeArray[0][5];
+          profileLinkContainer.appendChild(links[priorityIndex]);
+          for (let i = 0; i < links.length; i++) {
+            if (i != priorityIndex) {
+              profileLinkContainer.appendChild(links[i]);
             }
           }
 
@@ -872,12 +843,12 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 listItem.appendChild(respectingReceivingAccountAtag);
                 const iconDiv = document.createElement("div");
                 iconDiv.className = "ml-4 flex align-center";
-                const copyButton = document.createElement('button')
+                const copyButton = document.createElement("button");
                 copyButton.className = "mr-2 lg:mr-4";
-                copyButton.addEventListener('click', ()=>{
-                  var toCopy = eeArray[3][i]
+                copyButton.addEventListener("click", () => {
+                  var toCopy = eeArray[3][i];
                   navigator.clipboard.writeText(toCopy);
-                })
+                });
                 const copyImage = document.createElement("img");
                 copyImage.className = "h-5 w-5";
                 copyImage.setAttribute("src", "./svg/copy.svg");
@@ -894,7 +865,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 etherscanImage.setAttribute("alt", "etherscan logo");
                 etherscanAtag.appendChild(etherscanImage);
                 iconDiv.appendChild(etherscanAtag);
-                
+
                 listItem.appendChild(iconDiv);
                 respectReceivingContainer.appendChild(listItem);
               }
@@ -915,12 +886,12 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 listItem.appendChild(respectGivingAccountAtag);
                 const iconDiv = document.createElement("div");
                 iconDiv.className = "ml-4 flex";
-                const copyButton = document.createElement('button')
+                const copyButton = document.createElement("button");
                 copyButton.className = "mr-2 lg:mr-4";
-                copyButton.addEventListener('click', ()=>{
-                  var toCopy = eeArray[4][i]
+                copyButton.addEventListener("click", () => {
+                  var toCopy = eeArray[4][i];
                   navigator.clipboard.writeText(toCopy);
-                })
+                });
                 const copyImage = document.createElement("img");
                 copyImage.className = "h-5 w-5";
                 copyImage.setAttribute("src", "./svg/copy.svg");
@@ -953,16 +924,15 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
               break;
             }
           }
-          let notesSentPresent = false
-          if(eeArray[6][0]) {
-            notesSentPresent = true
-            notesSentModule.style.display = "block"
-
+          let notesSentPresent = false;
+          if (eeArray[6][0]) {
+            notesSentPresent = true;
+            notesSentModule.style.display = "block";
           }
-          
+
           if (notesPresent) {
             notesModule.style.display = "block";
-            
+
             notesContainer.textContent = "";
             for (let i = 0; i < eeArray[5].length; i += 2) {
               if (eeArray[5][i].length > 0) {
@@ -985,12 +955,12 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 noteSenderAtag.appendChild(noteSender);
                 iconDiv = document.createElement("div");
                 iconDiv.className = "ml-4 flex";
-                const copyButton = document.createElement('button')
+                const copyButton = document.createElement("button");
                 copyButton.className = "mr-2 lg:mr-4";
-                copyButton.addEventListener('click', ()=>{
-                  var toCopy = eeArray[5][i]
+                copyButton.addEventListener("click", () => {
+                  var toCopy = eeArray[5][i];
                   navigator.clipboard.writeText(toCopy);
-                })
+                });
                 const copyImage = document.createElement("img");
                 copyImage.className = "h-5 w-5";
                 copyImage.setAttribute("src", "./svg/copy.svg");
@@ -1009,24 +979,23 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 iconDiv.appendChild(etherscanAtag);
                 centeringDiv.appendChild(noteSenderAtag);
                 centeringDiv.appendChild(iconDiv);
-                
-                listItem.appendChild(centeringDiv);
-                if(currentAccount) {
 
-                  if(account.toLowerCase() == currentAccount.toLowerCase()) {
-                    var thisDelete = document.createElement('button')
-                    thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center')
-                    thisDelete.setAttribute('data-delete', '')
-                    var deleteImg = document.createElement('img')
-                    deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-                    deleteImg.setAttribute('src', './svg/delete.svg')
-                    deleteImg.setAttribute('alt', 'Wallet Logo')
-                    thisDelete.appendChild(deleteImg)
-                    centeringDiv.appendChild(thisDelete)
-                    
-                    thisDelete.addEventListener('click', ()=> {
-                      deleteReceivedNoteToContract(eeArray[5][i])
-                    })
+                listItem.appendChild(centeringDiv);
+                if (currentAccount) {
+                  if (account.toLowerCase() == currentAccount.toLowerCase()) {
+                    var thisDelete = document.createElement("button");
+                    thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center");
+                    thisDelete.setAttribute("data-delete", "");
+                    var deleteImg = document.createElement("img");
+                    deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
+                    deleteImg.setAttribute("src", "./svg/delete.svg");
+                    deleteImg.setAttribute("alt", "Wallet Logo");
+                    thisDelete.appendChild(deleteImg);
+                    centeringDiv.appendChild(thisDelete);
+
+                    thisDelete.addEventListener("click", () => {
+                      deleteReceivedNoteToContract(eeArray[5][i]);
+                    });
                   }
                 }
                 notesContainer.appendChild(listItem);
@@ -1052,23 +1021,21 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           pingModule.style.display = "block";
           pingContainer.textContent = eeArray[0][8];
         } else {
-          prepopulate(eeArray, verificationResponse, composable)
-          var grayedOut = document.querySelectorAll('#basic-data ~ div')
-          console.log(grayedOut)
-          for(let i = 0; i < grayedOut.length; i++) {
-            var elem = grayedOut[i]
-            elem.style.filter = "opacity(20%)"
-            elem.disabled = true
+          prepopulate(eeArray, verificationResponse, composable);
+          var grayedOut = document.querySelectorAll("#basic-data ~ div");
+          console.log(grayedOut);
+          for (let i = 0; i < grayedOut.length; i++) {
+            var elem = grayedOut[i];
+            elem.style.filter = "opacity(20%)";
+            elem.disabled = true;
           }
-          var pfpInner = document.getElementById('pfp-input-block').children
-          for(let i = 0; i < pfpInner.length; i++) {
-            var elem = pfpInner[i]
-            elem.style.filter = "opacity(20%)"
-            elem.disabled = true
+          var pfpInner = document.getElementById("pfp-input-block").children;
+          for (let i = 0; i < pfpInner.length; i++) {
+            var elem = pfpInner[i];
+            elem.style.filter = "opacity(20%)";
+            elem.disabled = true;
           }
-          
         }
-        
       }
     }
   }
@@ -1096,23 +1063,22 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
 
     function toggleView(section) {
       // var isVisible = Array.from(element.classList).includes('hidden')
-      var viewSection = document.getElementById('view-section')
-      var editSection = document.getElementById('edit-section')
+      var viewSection = document.getElementById("view-section");
+      var editSection = document.getElementById("edit-section");
       // console.log(viewSection, editSection)
       // console.log(editSection.classList)
-      if(section == 'view') {
-        viewSection.classList.remove('hidden')
-        viewSection.classList.remove('lg:hidden')
-        editSection.classList.add('hidden')
-        editSection.classList.add('lg:hidden')
-      } else if(section == 'edit') {
-        editSection.classList.remove('hidden')
-        editSection.classList.remove('lg:hidden')
-        viewSection.classList.add('hidden')
-        viewSection.classList.add('lg:hidden')
+      if (section == "view") {
+        viewSection.classList.remove("hidden");
+        viewSection.classList.remove("lg:hidden");
+        editSection.classList.add("hidden");
+        editSection.classList.add("lg:hidden");
+      } else if (section == "edit") {
+        editSection.classList.remove("hidden");
+        editSection.classList.remove("lg:hidden");
+        viewSection.classList.add("hidden");
+        viewSection.classList.add("lg:hidden");
       }
 
-      
       // element.forEach((el)=>console.log(Array.from(el.classList).includes('hidden')))
     }
 
@@ -1121,21 +1087,19 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       toggleClasses(edit_btn, ["text-secondary", "bg-main"], ["text-main", "bg-orange"]);
       toggleClasses(view_btn, ["text-main", "bg-orange"], ["text-secondary", "bg-main"]);
 
-      toggleView(module_edit_arr)
+      toggleView(module_edit_arr);
 
       for (let i = 0; i < module_view_arr.length; i++) {
-        toggleView('edit')
+        toggleView("edit");
       }
 
-      if(blonksPlaceholder) {
-
-        pfpcontainer.innerHTML = ''
+      if (blonksPlaceholder) {
+        pfpcontainer.innerHTML = "";
         editPfpContainer.innerHTML = BLONKSsvg;
-        editPfpContainer.classList.add('w-full')
-        editPfpContainer.classList.add('aspect-square')
-        editPfpContainer.classList.add('object-contain')
+        editPfpContainer.classList.add("w-full");
+        editPfpContainer.classList.add("aspect-square");
+        editPfpContainer.classList.add("object-contain");
       }
-
     });
 
     view_btn.addEventListener("click", () => {
@@ -1144,15 +1108,14 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       toggleClasses(view_btn, ["text-secondary", "bg-main"], ["text-main", "bg-orange"]);
 
       for (let i = 0; i < module_edit_arr.length; i++) {
-        toggleView('view')
+        toggleView("view");
       }
-      if(blonksPlaceholder) {
-
-        editPfpContainer.innerHTML = ''
+      if (blonksPlaceholder) {
+        editPfpContainer.innerHTML = "";
         pfpcontainer.innerHTML = BLONKSsvg;
-        pfpcontainer.classList.add('w-full')
-        pfpcontainer.classList.add('aspect-square')
-        pfpcontainer.classList.add('object-contain')
+        pfpcontainer.classList.add("w-full");
+        pfpcontainer.classList.add("aspect-square");
+        pfpcontainer.classList.add("object-contain");
       }
     });
 
@@ -1193,7 +1156,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
   async function showBONKSPlaceholder() {
     const pfpcontainer = document.querySelector("#pfpContainer");
     const editPfpContainer = document.getElementById("editPfpContainer");
-    
+
     error = false;
     if (!pfpcontainer) {
       console.error("Container not found");
@@ -1216,11 +1179,11 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       error = true;
     }
     if (!error) {
-      blonksPlaceholder = true
+      blonksPlaceholder = true;
       pfpcontainer.innerHTML = BLONKSsvg;
-      pfpcontainer.classList.add('h-full')
-      pfpcontainer.classList.add('aspect-square')
-      pfpcontainer.classList.add('object-cover')
+      pfpcontainer.classList.add("h-full");
+      pfpcontainer.classList.add("aspect-square");
+      pfpcontainer.classList.add("object-cover");
       blonksInfo.style.display = "block";
       blonksInfo.textContent = `Showing BLONKS #${randTokenId}, using the '${rendererStrings[renderer]}' EVM renderer, appearing as if it was owned by this account. (Learn more at BLONKS.xyz)`;
     }
@@ -1228,16 +1191,16 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
 } else {
   //only handle header
   if (searchParams.get("chain")) {
-    window.addEventListener('load', ()=> {
+    window.addEventListener("load", () => {
       //use search params chainID
-      const chainInput = searchParams.get("chain")
-      var hasID = chains.find(o => o.id === Number(chainInput))
-      console.log(hasID)
+      const chainInput = searchParams.get("chain");
+      var hasID = chains.find((o) => o.id === Number(chainInput));
+      console.log(hasID);
       chainIndex = chains.indexOf(hasID);
-      console.log('chainIndex ' + chainIndex)
-      console.log('chain input: ' + chainInput)
+      console.log("chainIndex " + chainIndex);
+      console.log("chain input: " + chainInput);
       if (chainIndex > -1) {
-        var currentNetwork = chains[chainIndex]
+        var currentNetwork = chains[chainIndex];
         //set contract address for chain
         chain = currentNetwork.name;
         chainScan = currentNetwork.explorerBaseUrl;
@@ -1249,23 +1212,22 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         if (account) {
           _queryContract(account);
         }
-        
-        var chainText = document.getElementById('chain-display')
-        chainText.innerHTML = '(' + chain + ')';
+
+        var chainText = document.getElementById("chain-display");
+        chainText.innerHTML = "(" + chain + ")";
       } else {
-        
-        console.log('exception ' + account)
-        applyQuery(account)
+        console.log("exception " + account);
+        applyQuery(account);
       }
-    })
+    });
   } else {
     // currentChainId is aynsc, so we need to wait for it to be set before we can use it
-    window.addEventListener('load', ()=>{
-      var hasID = chains.find(o => o.id === Number(currentChainId))
+    window.addEventListener("load", () => {
+      var hasID = chains.find((o) => o.id === Number(currentChainId));
       chainIndex = chains.indexOf(hasID);
-      console.log('chainIndex ' + chainIndex)
+      console.log("chainIndex " + chainIndex);
       if (chainIndex > -1) {
-        var currentNetwork = chains[chainIndex]
+        var currentNetwork = chains[chainIndex];
         chain = currentNetwork.name;
         chainScan = currentNetwork.explorerBaseUrl;
         console.log("Chain detected: " + chain);
@@ -1277,29 +1239,27 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           _queryContract(account);
         }
 
-
-        var chainText = document.getElementById('chain-display')
-        chainText.innerHTML = '(' + chain +')';
-
+        var chainText = document.getElementById("chain-display");
+        chainText.innerHTML = "(" + chain + ")";
       } else {
-        applyQuery(account)
+        applyQuery(account);
       }
-    })
+    });
   }
 }
-  // async function updateSampleSVGs() {
-  //   // Wiping any previous previewed SVG
-  //   document.getElementById("svgPlaceholder").innerHTML = "";
-  //   // Getting random renders
-  //   let BLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(0).call();
-  //   let DarkBLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(1).call();
-  //   let PepeBLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(2).call();
-  //   let BLOOPsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(3).call();
-  //   document.getElementById("BLONK-live").innerHTML = BLONKsvg;
-  //   document.getElementById("DarkBLONK-live").innerHTML = DarkBLONKsvg;
-  //   document.getElementById("PepeBLONK-live").innerHTML = PepeBLONKsvg;
-  //   document.getElementById("BLOOP-live").innerHTML = BLOOPsvg;
-  // }
+// async function updateSampleSVGs() {
+//   // Wiping any previous previewed SVG
+//   document.getElementById("svgPlaceholder").innerHTML = "";
+//   // Getting random renders
+//   let BLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(0).call();
+//   let DarkBLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(1).call();
+//   let PepeBLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(2).call();
+//   let BLOOPsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(3).call();
+//   document.getElementById("BLONK-live").innerHTML = BLONKsvg;
+//   document.getElementById("DarkBLONK-live").innerHTML = DarkBLONKsvg;
+//   document.getElementById("PepeBLONK-live").innerHTML = PepeBLONKsvg;
+//   document.getElementById("BLOOP-live").innerHTML = BLOOPsvg;
+// }
 
 // function searchButton() {
 //   var submittedAccount = document.getElementById("submitted-account").value;
@@ -1319,6 +1279,5 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
 // function _etherEthos(address) {
 //   return `<a href="${siteBase}?account=${address}">${address}</a>`;
 // }
-
 
 // const dataLegend = [["alias", "account_detail", "social", "website", "gallery", "link_priority", "pfp_contract", "pfp_id"], ["link", "link_detail"], ["EOA", "EOA_detail"], ["respecter account"], ["respecting account"], ["note", "note_detail"], ["tag"], ["badge", "badge_detail"], ["custom"]];
