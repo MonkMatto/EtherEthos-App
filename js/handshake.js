@@ -165,10 +165,12 @@ function startApp(provider) {
       window.sessionStorage.setItem("chainIDLoaded", true);
       // Check if contract address of this chain ID matches the existing assumption, update if not
       var walletChain = chains.find((o) => o.id === Number(currentChainId));
-      if (walletChain.contractAddress !== EE_ADDRESS) {
-        EE_ADDRESS = walletChain.contractAddress;
-        //Re-initialize User Contract Object
-        EE_Contract_User = new web3User.eth.Contract(EE_ABI, EE_ADDRESS);
+      if (!chainParams.has("chain")) {
+        if (walletChain.contractAddress !== EE_ADDRESS) {
+          EE_ADDRESS = walletChain.contractAddress;
+          //Re-initialize User Contract Object
+          EE_Contract_User = new web3User.eth.Contract(EE_ABI, EE_ADDRESS);
+        }
       }
 
       // You can now use currentChainId in other parts of your app
