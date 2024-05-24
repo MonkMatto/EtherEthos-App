@@ -25,22 +25,66 @@
   <body class="bg-secondary text-base lg:text-xl">
     <!-- Add your site or application content here -->
     <header class="header w-full border-b-2 border-main">
-      <div class="flex h-16 justify-between sm:h-16 md:h-20 lg:h-20 transition-all-250">
-        <a id="header-logo" class="flex h-full items-center transition-all-250 hover:opacity-80" href="/">
-          <img class="h-full w-full object-cover" src="img/EtherEthos.png" alt="logo" />
-          <span class="flex flex-col justify-end items-start text-left md:flex-row md:items-end gap-2 transition-all-250">
-            <h1 class="ml-4 h-2/3 text-3xl font-bold md:ml-10 md:text-4xl transition-all-250">EtherEthos</h1>
-            <p id="chain-display" class="self-start mb-1 ml-4 text-center align-bottom md:self-end md:ml-0"></p>
+      <div
+        class="transition-all-250 flex h-16 justify-between sm:h-16 md:h-20 lg:h-20"
+      >
+        <a
+          id="header-logo"
+          class="transition-all-250 flex h-full items-center hover:opacity-80"
+          href="/"
+        >
+          <img
+            class="h-full w-full object-cover"
+            src="img/EtherEthos.png"
+            alt="logo"
+          />
+          <span
+            class="transition-all-250 flex flex-col items-start justify-end gap-2 text-left md:flex-row md:items-end"
+          >
+            <h1
+              class="transition-all-250 ml-4 h-2/3 text-3xl font-bold md:ml-10 md:text-4xl"
+            >
+              EtherEthos
+            </h1>
+            <p
+              id="chain-display"
+              class="mb-1 ml-4 self-start text-center align-bottom md:ml-0 md:self-end"
+            ></p>
           </span>
         </a>
-        <div class="flex w-100 h-full items-center">
-          <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
-          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:contrast-125 lg:px-12 lg:py-1 z-10">
-            <span class="absolute hidden h-full text-[22px] font-bold text-secondary md:relative md:flex md:items-center">CONNECT</span>
-            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full md:hidden"/>
-            <div id="profile-dropdown" class="absolute border-none flex-col  items-center w-full border-main bg-secondary right-0 top-[102%] overflow-hidden transition-all">
-              <div id="my-profile" class="relative flex border-none justify-center items-center w-full bg-main text-secondary text-center align-middle hover:invert overflow-hidden">My Profile</div>
-              <div id="reconnect" class="relative flex border-none justify-center items-center w-full bg-main text-secondary align-middle hover:invert overflow-hidden">Connect Other Wallet</div>
+        <div class="w-100 flex h-full items-center">
+          <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold"
+            >FAQ</a
+          >
+          <button
+            data-connect
+            class="z-10 h-full rounded-none bg-main p-3 transition-all hover:contrast-125 lg:px-12 lg:py-1"
+          >
+            <span
+              class="absolute hidden h-full text-[22px] font-bold text-secondary md:relative md:flex md:items-center"
+              >CONNECT</span
+            >
+            <img
+              src="./svg/wallet.svg"
+              alt="Wallet logo"
+              class="h-full w-full md:hidden"
+            />
+            <div
+              id="profile-dropdown"
+              class="absolute right-0 top-[102%] w-full flex-col items-center overflow-hidden border-none border-main bg-secondary transition-all"
+            >
+              <div
+                id="my-profile"
+                class="relative flex w-full items-center justify-center overflow-hidden border-none bg-main text-center align-middle text-secondary hover:invert"
+              >
+                My Profile
+              </div>
+              <div
+                id="reconnect"
+                class="relative flex w-full items-center justify-center overflow-hidden border-none bg-main align-middle text-secondary hover:invert"
+              >
+                Connect Other Wallet
+              </div>
             </div>
           </button>
         </div>
@@ -51,68 +95,123 @@
       <section>
         <h2 class="mb-6 mt-6 lg:mb-20 lg:mt-0">Frequently Asked Questions</h2>
         <ul class="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-8">
-          <li class="bg-blue single-cell">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Why is it important that I *own* my profile data?</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Before EtherEthos, you give your data away for free, all the time. To every app that 
-              asks you to create a profile, from marketplaces to social networks. You give up 
-              control over that data and entrust its security to a centralized entity. Do you think 
-              their security practices as good as an Ethereum private key??? In addition, owning 
-              your profile data means that, with EtherEthos adoption, you only need to update it, 
-              delete it, turn it off, etc. in one place - the contract. If you build your EtherEthos, the
-              apps will come to you.</p>
+          <li class="single-cell bg-blue">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">
+              Why is it important that I *own* my profile data?
+            </h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">
+              Before EtherEthos, you give your data away for free, all the time.
+              To every app that asks you to create a profile, from marketplaces
+              to social networks. You give up control over that data and entrust
+              its security to a centralized entity. Do you think their security
+              practices as good as an Ethereum private key??? In addition,
+              owning your profile data means that, with EtherEthos adoption, you
+              only need to update it, delete it, turn it off, etc. in one place
+              - the contract. If you build your EtherEthos, the apps will come
+              to you.
+            </p>
           </li>
-          <li class="bg-blue single-cell">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">What is composability and why should I care?</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Composability allows for simple use of data across various apps and 
-              implementations. It creates opportunities for a more streamlined app development, 
-              and it creates opportunities for better user experience - your experience. I means 
-              that smart contracts can actually use the data and incorporate it into their 
-              functions. It creates a more 'open' world to share your data - if you want to.</p>
+          <li class="single-cell bg-blue">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">
+              What is composability and why should I care?
+            </h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">
+              Composability allows for simple use of data across various apps
+              and implementations. It creates opportunities for a more
+              streamlined app development, and it creates opportunities for
+              better user experience - your experience. I means that smart
+              contracts can actually use the data and incorporate it into their
+              functions. It creates a more 'open' world to share your data - if
+              you want to.
+            </p>
           </li>
-          <li class="bg-blue single-cell">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">How can I remove my data?</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">When you write your data to the EtherEthos contract, you create a permanent 
-              record of that data on-chain. Even if you disable composability (turns off live access 
-              through the contract) or overwrite the data entirely, the initially stored data will still 
-              exist and still be publicly accessible through blockchain explorers. You should not 
-              'dox' yourself on EtherEthos unless you're already public about your identity. You 
-              should never write any personally identifiable information to the contract.</p>
+          <li class="single-cell bg-blue">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">
+              How can I remove my data?
+            </h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">
+              When you write your data to the EtherEthos contract, you create a
+              permanent record of that data on-chain. Even if you disable
+              composability (turns off live access through the contract) or
+              overwrite the data entirely, the initially stored data will still
+              exist and still be publicly accessible through blockchain
+              explorers. You should not 'dox' yourself on EtherEthos unless
+              you're already public about your identity. You should never write
+              any personally identifiable information to the contract.
+            </p>
           </li>
-          <li class="bg-blue single-cell">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">How does this work with multiple chains?</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Data on each chain is by default separate - updating data on mainnet does not 
-              update data on an L2. We are entering a multi-layer world though, and on every 
-              layer, a user can update a timestamp (this is the timestamp ping). Apps that use 
-              EtherEthos data could search profiles on each supported layer and only pull the 
-              data from the newest timestamp. In such a scenario, one could write data on an L2, 
-              and if the timestamp is farther along than mainnet, the app would serve the L2's 
-              data.</p>
+          <li class="single-cell bg-blue">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">
+              How does this work with multiple chains?
+            </h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">
+              Data on each chain is by default separate - updating data on
+              mainnet does not update data on an L2. We are entering a
+              multi-layer world though, and on every layer, a user can update a
+              timestamp (this is the timestamp ping). Apps that use EtherEthos
+              data could search profiles on each supported layer and only pull
+              the data from the newest timestamp. In such a scenario, one could
+              write data on an L2, and if the timestamp is farther along than
+              mainnet, the app would serve the L2's data.
+            </p>
           </li>
-          <li class="bg-blue col-span-full">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">What is respecting, respect, and notes?</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">EtherEthos evolved from a sort of 'on-chain resume' system, and viewing these 
-              features in that framework might help. Respecting an account shows that a user is 
-              publicly showing their respect for another. This could simply be used as a social 
-              signal, and this data is shown on both accounts - the respect giver and receiver. In 
-              addition, respecting an account gives the respect-receiving account permission to 
-              write the respect-giving account a note. These notes are public and visible on both 
-              account's profiles, and these can be thought of as professional 
-              endorsements/recommendations, or just simple notes 'Congrats on the launch!'. 
-              Given two accounts, A and B, if each account respects the other, each account can 
-              only write one note for the other. This note can be overwritten by the writer, and it 
-              can be deleted by either party.</p>
+          <li class="col-span-full bg-blue">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">
+              What is respecting, respect, and notes?
+            </h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">
+              EtherEthos evolved from a sort of 'on-chain resume' system, and
+              viewing these features in that framework might help. Respecting an
+              account shows that a user is publicly showing their respect for
+              another. This could simply be used as a social signal, and this
+              data is shown on both accounts - the respect giver and receiver.
+              In addition, respecting an account gives the respect-receiving
+              account permission to write the respect-giving account a note.
+              These notes are public and visible on both account's profiles, and
+              these can be thought of as professional
+              endorsements/recommendations, or just simple notes 'Congrats on
+              the launch!'. Given two accounts, A and B, if each account
+              respects the other, each account can only write one note for the
+              other. This note can be overwritten by the writer, and it can be
+              deleted by either party.
+            </p>
           </li>
-          <li class="bg-blue col-span-full">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">I'm an app/contract dev, and I want to use this data! Where do I start?</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Awesome! First and foremost, understand that it is EtherEthos's intention that apps only
-              use live contract data, thereby adhering to the composability wishes of every 
-              account. If you don't agree to that, ask yourself if users will want to use your app 
-              when you don't respect their wishes. Right? Ok, check out the docs on <a class="underline" href="https://docs.etherethos.com/" target="_blank">docs.etherethos.com</a>. 
-              Also note that this site does not store any profile data, 
-              it only retrieves data live from chain, and it is a public repo.
-              Additionally, there are a growing number of NFT contracts that use EtherEthos data, 
-              starting with BLONKS. The relevant functions are included in this project's 
-              documentation.</p>
+          <li class="col-span-full bg-blue">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">
+              I'm an app/contract dev, and I want to use this data! Where do I
+              start?
+            </h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">
+              Awesome! First and foremost, understand that it is EtherEthos's
+              intention that apps only use live contract data, thereby adhering
+              to the composability wishes of every account. If you don't agree
+              to that, ask yourself if users will want to use your app when you
+              don't respect their wishes. Right? Ok, check out the docs on
+              <a
+                class="underline"
+                href="https://docs.etherethos.com/"
+                target="_blank"
+                >docs.etherethos.com</a
+              >. Also note that this site does not store any profile data, it
+              only retrieves data live from chain, and it is a public repo.
+              Additionally, there are a growing number of NFT contracts that use
+              EtherEthos data, starting with BLONKS. The relevant functions are
+              included in this project's documentation.
+            </p>
+          </li>
+          <li class="col-span-full bg-blue">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">
+              Is this free?
+            </h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">
+              Anyone, any service, and any contract can use the EtherEthos
+              systems (website, contract, and the data within it) for free /
+              only paying gas when applicable. There are no platform fees paid
+              to EtherEthos.com, the contract, or the dev, @MonkMatto. There are
+              costs associated with running this service for free to all
+              Ethereum users, and any tips are appreciated at dev.EtherEthos.eth
+              (0xC4D3972282107087eDA58f8BA2DE3C36e09DC236).
+            </p>
           </li>
         </ul>
       </section>
