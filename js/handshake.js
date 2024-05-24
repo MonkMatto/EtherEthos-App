@@ -7,6 +7,7 @@ const web3Arbitrum = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_AR
 const web3Polygon = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`);
 const web3Zora = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`);
 let currentChain = null;
+let chainIndex = null;
 let currentAccount = null;
 window.sessionStorage.setItem("chainIDLoaded", false);
 
@@ -62,7 +63,7 @@ let chains = [
   },
 ];
 
-var chainParams = new URLSearchParams(window.location.search);
+let chainParams = new URLSearchParams(window.location.search);
 let EE_ADDRESS;
 if (chainParams.has("chain")) {
   //Find contract address based on search query
@@ -122,6 +123,31 @@ function startApp(provider) {
   }
   web3User = new Web3(provider); // Initialize user's web3
 
+  // // in: chainID
+  // // out: contract address
+  // if (chainParams.has("chain")) {
+  //   //Find contract address based on search query
+  //   var findChainID = chains.find((o) => o.id === Number(chainParams.get("chain")));
+  //   chainIndex = chains.indexOf(findChainID);
+  //   EE_ADDRESS = chains[chainIndex].contractAddress;
+  // } else {
+  //   console.log("trying to use network from metamask");
+  //   if (currentChainId) {
+  //     //Find contract address based on wallet chainID
+  //     window.addEventListener("load", () => {
+  //       var findChainID = chains.find((o) => o.id === currentChainId);
+  //       chainIndex = chains.indexOf(findChainID);
+  //       console.log("chain index is " + chainIndex + ", it was found by searching for chain id " + currentChainId + " and is returning " + chains[chainIndex].contractAddress);
+  //       EE_ADDRESS = chains[chainIndex].contractAddress;
+  //       console.log("successfully used network from metamask, " + chains[chainIndex].name);
+  //     });
+  //   } else {
+  //     //Use default (mainnet)
+  //     console.log("defaulted to mainnet");
+  //     chainIndex = 0;
+  //     EE_ADDRESS = "0x1f4126A9D34811E55B9506F011aC1df1396ac909";
+  //   }
+  // }
   // Now initialize the user's contract object
   EE_Contract_User = new web3User.eth.Contract(EE_ABI, EE_ADDRESS);
 
@@ -137,6 +163,16 @@ function startApp(provider) {
       currentChainId = parseInt(chainId, 16);
       console.log("Current Chain ID:", currentChainId);
       window.sessionStorage.setItem("chainIDLoaded", true);
+      // Check if contract address of this chain ID matches the existing assumption, update if not
+      var walletChain = chains.find((o) => o.id === Number(currentChainId));
+      if (!chainParams.has("chain")) {
+        if (walletChain.contractAddress !== EE_ADDRESS) {
+          EE_ADDRESS = walletChain.contractAddress;
+          //Re-initialize User Contract Object
+          EE_Contract_User = new web3User.eth.Contract(EE_ABI, EE_ADDRESS);
+        }
+      }
+
       // You can now use currentChainId in other parts of your app
     })
     .catch(handleError);
