@@ -1,5 +1,13 @@
 let account, abbrvAccount, error, permissions, eeArray, eeBasics, chain;
-let composable, accountIsBlocked, moderator, verificationResponse, perms, composableCheck, accountIsBlockedCheck, moderatorCheck, verificationResponseCheck;
+let composable,
+  accountIsBlocked,
+  moderator,
+  verificationResponse,
+  perms,
+  composableCheck,
+  accountIsBlockedCheck,
+  moderatorCheck,
+  verificationResponseCheck;
 // arbitrum and polygon not yet supported
 // let chainIds = [1, 11155111, 10, 8453, 42161, 137];
 // let chainNames = ["mainnet", "sepolia", "optimism", "base", "arbitrum", "polygon"];
@@ -36,28 +44,54 @@ const chainContent = document.querySelectorAll("[text-content-chain]");
 const contractLink = document.querySelector("[contract-link]");
 
 const accountNameElements = document.querySelectorAll("[data-account-name]");
-const accountStatusElement = document.querySelectorAll("[data-content-account-status]");
+const accountStatusElement = document.querySelectorAll(
+  "[data-content-account-status]",
+);
 
-const accountComposableElementTrue = document.querySelector("[data-composable=true]");
-const accountComposableElementFalse = document.querySelector("[data-composable=false]");
-const accountEditComposableElementTrue = document.querySelector("[data-edit-composable=true]");
-const accountEditComposableElementFalse = document.querySelector("[data-edit-composable=false]");
-const accountComposableSection = document.querySelector("[data-view-section=composable]");
+const accountComposableElementTrue = document.querySelector(
+  "[data-composable=true]",
+);
+const accountComposableElementFalse = document.querySelector(
+  "[data-composable=false]",
+);
+const accountEditComposableElementTrue = document.querySelector(
+  "[data-edit-composable=true]",
+);
+const accountEditComposableElementFalse = document.querySelector(
+  "[data-edit-composable=false]",
+);
+const accountComposableSection = document.querySelector(
+  "[data-view-section=composable]",
+);
 const accountComposableTooltip = document.getElementById("composable-tooltip");
-const accountEditComposableTooltip = document.getElementById("edit-composable-tooltip");
+const accountEditComposableTooltip = document.getElementById(
+  "edit-composable-tooltip",
+);
 
-const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
-const accountEditBlockedElement = document.querySelector("[data-edit-section=blocked]");
-const accountModeratorElement = document.querySelector("[data-view-section=moderator]");
-const accountEditModeratorElement = document.querySelector("[data-edit-section=moderator]");
-const accountVerificationElement = document.querySelector("[data-content=verification]");
+const accountBlockedElement = document.querySelector(
+  "[data-view-section=blocked]",
+);
+const accountEditBlockedElement = document.querySelector(
+  "[data-edit-section=blocked]",
+);
+const accountModeratorElement = document.querySelector(
+  "[data-view-section=moderator]",
+);
+const accountEditModeratorElement = document.querySelector(
+  "[data-edit-section=moderator]",
+);
+const accountVerificationElement = document.querySelector(
+  "[data-content=verification]",
+);
 
 const basicData = document.querySelector("[data-module=basic]");
 const pfpImage = document.querySelector("[data-edit-image]");
 const pfpId = document.querySelector("[data-content=pfp-id]");
 const pfpContract = document.querySelector("[data-content=pfp-contract]");
 const pfpVerified = document.querySelector("[data-content=pfp-verification]");
-const pfpActualOwner = document.querySelector("[data-content=pfp-actual-owner]");
+const pfpActualOwner = document.querySelector(
+  "[data-content=pfp-actual-owner]",
+);
 const blonksInfo = document.querySelector("[data-content=blonks-info]");
 
 const pfpcontainer = document.querySelector("#pfpContainer");
@@ -79,10 +113,18 @@ const associatedModule = document.querySelector("[data-module=associated]");
 const associatedContainer = document.querySelector("[data-content=associated]");
 
 const respectModule = document.querySelector("[data-module=respect]");
-const respectedHeading = document.querySelector("[text-content=respected-heading]");
-const respectingHeading = document.querySelector("[text-content=respecting-heading]");
-const respectReceivingContainer = document.querySelector("[data-content-list=receiving]");
-const respectGivingContainer = document.querySelector("[data-content-list=giving]");
+const respectedHeading = document.querySelector(
+  "[text-content=respected-heading]",
+);
+const respectingHeading = document.querySelector(
+  "[text-content=respecting-heading]",
+);
+const respectReceivingContainer = document.querySelector(
+  "[data-content-list=receiving]",
+);
+const respectGivingContainer = document.querySelector(
+  "[data-content-list=giving]",
+);
 
 const notesSentModule = document.querySelector("[data-module=notes-sent]");
 
@@ -101,7 +143,10 @@ function isValidEthereumAddress(address) {
 }
 
 //only run when home page or on profile page, else only handle account
-if (window.location.pathname == "/" || window.location.pathname.includes("address")) {
+if (
+  window.location.pathname == "/" ||
+  window.location.pathname.includes("address")
+) {
   // Function to toggle visibility based on Ethereum address validity
   function mainIsVisible(isValid) {
     console.log("Toggling visibility based on address validity..." + isValid);
@@ -159,7 +204,8 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
         chainContent.forEach((element) => {
           element.textContent = `(${chain})`;
         });
-        contractLink.href = chainScan + currentNetwork.contractAddress + "#code";
+        contractLink.href =
+          chainScan + currentNetwork.contractAddress + "#code";
         if (account) {
           _queryContract(account);
         }
@@ -186,7 +232,8 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
         chainContent.forEach((element) => {
           element.textContent = `(${chain})`;
         });
-        contractLink.href = chainScan + currentNetwork.contractAddress + "#code";
+        contractLink.href =
+          chainScan + currentNetwork.contractAddress + "#code";
         if (account) {
           _queryContract(account);
         }
@@ -246,7 +293,10 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
     if (currentAccount) {
       console.log(`account ${account}, currentAccount ${currentAccount}`);
       queriedChain = chains.find((o) => o.name === chain);
-      if (account.toLowerCase() == currentAccount.toLowerCase() && currentChainId == queriedChain.id) {
+      if (
+        account.toLowerCase() == currentAccount.toLowerCase() &&
+        currentChainId == queriedChain.id
+      ) {
         accountPermitted = true;
         if (edit_btn.classList.contains("hidden")) {
           edit_btn.classList.remove("hidden");
@@ -266,27 +316,79 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
     console.log("Querying contract for account: " + account);
     // check if account matches the hex pattern
     if (account) {
-      console.log("Checking account permissions for " + account + " on " + chain + "...");
+      console.log(
+        "Checking account permissions for " + account + " on " + chain + "...",
+      );
       try {
         if (chain == "mainnet") {
-          permissions = await EE_Contract_Alchemy.methods.permissions(account).call({}, function (err, res) {
-            if (err) {
-              console.log(err);
-              return;
-            }
-          });
+          permissions = await EE_Contract_Alchemy.methods
+            .permissions(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
         } else if (chain == "sepolia") {
-          permissions = await EE_Contract_Alchemy_Sepolia.methods.permissions(account).call({}, function (err, res) {
-            if (err) {
-              console.log(err);
-              return;
-            }
-          });
+          permissions = await EE_Contract_Alchemy_Sepolia.methods
+            .permissions(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+        } else if (chain == "optimism") {
+          permissions = await EE_Contract_Alchemy_Optimism.methods
+            .permissions(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+        } else if (chain == "base") {
+          permissions = await EE_Contract_Alchemy_Base.methods
+            .permissions(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+        } else if (chain == "arbitrum") {
+          permissions = await EE_Contract_Alchemy_Arbitrum.methods
+            .permissions(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+        } else if (chain == "polygon") {
+          permissions = await EE_Contract_Alchemy_Polygon.methods
+            .permissions(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
+        } else if (chain == "zora") {
+          permissions = await EE_Contract_Alchemy_Zora.methods
+            .permissions(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
         }
 
         /// add other chains here
 
-        ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
+        ({ composable, accountIsBlocked, moderator, verificationResponse } =
+          permissions);
 
         // Handle address copy link
         function buildCopyAccount(a) {
@@ -322,7 +424,8 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
           accountComposableElementFalse.style.display = "block";
           accountEditComposableElementTrue.style.display = "hidden";
           accountEditComposableElementFalse.style.display = "block";
-          accountStatus += "Account is not composable (may not have set up an EtherEthos profile). ";
+          accountStatus +=
+            "Account is not composable (may not have set up an EtherEthos profile). ";
         }
         if (accountIsBlocked) {
           accountBlockedElement.style.display = "block";
@@ -346,67 +449,86 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
         });
         accountComposableTooltip.textContent = accountStatus;
         accountEditComposableTooltip.textContent = accountStatus;
-      } catch (errorMessage) {
+      } catch (error) {
+        console.log(error);
         error = true;
       }
+
       if (composable) {
         console.log("Attempting to retrieve account...");
         try {
           if (chain == "mainnet") {
-            eeArray = await EE_Contract_Alchemy.methods.assembleAccountData(account).call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
+            eeArray = await EE_Contract_Alchemy.methods
+              .assembleAccountData(account)
+              .call({}, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              });
           } else if (chain == "sepolia") {
-            eeArray = await EE_Contract_Alchemy_Sepolia.methods.assembleAccountData(account).call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
+            eeArray = await EE_Contract_Alchemy_Sepolia.methods
+              .assembleAccountData(account)
+              .call({}, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              });
           } else if (chain == "optimism") {
-            eeArray = await EE_Contract_Alchemy_Optimism.methods.assembleAccountData(account).call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
+            eeArray = await EE_Contract_Alchemy_Optimism.methods
+              .assembleAccountData(account)
+              .call({}, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              });
           } else if (chain == "base") {
-            eeArray = await EE_Contract_Alchemy_Base.methods.assembleAccountData(account).call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
+            eeArray = await EE_Contract_Alchemy_Base.methods
+              .assembleAccountData(account)
+              .call({}, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              });
           } else if (chain == "arbitrum") {
-            eeArray = await EE_Contract_Alchemy_Arbitrum.methods.assembleAccountData(account).call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
+            eeArray = await EE_Contract_Alchemy_Arbitrum.methods
+              .assembleAccountData(account)
+              .call({}, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              });
           } else if (chain == "polygon") {
-            eeArray = await EE_Contract_Alchemy_Polygon.methods.assembleAccountData(account).call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
+            eeArray = await EE_Contract_Alchemy_Polygon.methods
+              .assembleAccountData(account)
+              .call({}, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              });
           } else if (chain == "zora") {
-            eeArray = await EE_Contract_Alchemy_Zora.methods.assembleAccountData(account).call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
+            eeArray = await EE_Contract_Alchemy_Zora.methods
+              .assembleAccountData(account)
+              .call({}, function (err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+              });
           }
 
           /// add other chains here
         } catch (errorMessage) {
           error = true;
+          console.log(errorMessage);
         }
+      } else {
+        console.log("Account Not Composable, not retrieving data");
       }
       if (error) {
         console.log("No Account Was Retrived");
@@ -421,7 +543,12 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
 
         if (composable) {
           console.log(eeArray);
-          prepopulate(eeArray, verificationResponse, accountPermitted, chainScan);
+          prepopulate(
+            eeArray,
+            verificationResponse,
+            accountPermitted,
+            chainScan,
+          );
           basicData.style.display = "block";
 
           // PFP DATA
@@ -433,13 +560,26 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
               console.log("Token ID: ", tokenId);
               pfpId.textContent = tokenId;
 
-              const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Optimism = new web3Optimism.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Base = new web3Base.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Arbitrum = new web3Arbitrum.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Polygon = new web3Polygon.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Zora = new web3Zora.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy = new web3Main.eth.Contract(
+                NFT_ABI,
+                eeArray[0][6],
+              );
+              const EE_NFTContract_Alchemy_Sepolia =
+                new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Optimism =
+                new web3Optimism.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Base = new web3Base.eth.Contract(
+                NFT_ABI,
+                eeArray[0][6],
+              );
+              const EE_NFTContract_Alchemy_Arbitrum =
+                new web3Arbitrum.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Polygon =
+                new web3Polygon.eth.Contract(NFT_ABI, eeArray[0][6]);
+              const EE_NFTContract_Alchemy_Zora = new web3Zora.eth.Contract(
+                NFT_ABI,
+                eeArray[0][6],
+              );
               // add other chains here?
 
               let pfpOwner;
@@ -447,54 +587,82 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
               // add delegation check at some point to see if the account is "allowed" to use the pfp
               try {
                 if (chain == "mainnet") {
-                  pfpOwner = await EE_NFTContract_Alchemy.methods.ownerOf(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  pfpOwner = await EE_NFTContract_Alchemy.methods
+                    .ownerOf(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "sepolia") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Sepolia.methods.ownerOf(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  pfpOwner = await EE_NFTContract_Alchemy_Sepolia.methods
+                    .ownerOf(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "optimism") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Optimism.methods.ownerOf(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  pfpOwner = await EE_NFTContract_Alchemy_Optimism.methods
+                    .ownerOf(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "base") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Base.methods.ownerOf(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  pfpOwner = await EE_NFTContract_Alchemy_Base.methods
+                    .ownerOf(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "arbitrum") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Arbitrum.methods.ownerOf(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  pfpOwner = await EE_NFTContract_Alchemy_Arbitrum.methods
+                    .ownerOf(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "polygon") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Polygon.methods.ownerOf(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  pfpOwner = await EE_NFTContract_Alchemy_Polygon.methods
+                    .ownerOf(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "zora") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Zora.methods.ownerOf(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  pfpOwner = await EE_NFTContract_Alchemy_Zora.methods
+                    .ownerOf(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 }
                 console.log("PFP Owner: ", pfpOwner);
 
@@ -503,68 +671,105 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
                 error = true;
               }
               if (!error) {
-                if (pfpOwner.toLowerCase() == account ? account.toLowerCase() : account) {
+                if (
+                  pfpOwner.toLowerCase() == account
+                    ? account.toLowerCase()
+                    : account
+                ) {
                   pfpVerified.textContent = "✔️ PFP Ownership Verified";
                   console.log("PFP Ownership Verified");
                 } else {
-                  pfpVerified.textContent = "✖️ PFP Not Owned by Account. The Verified Owner: ";
-                  console.log("PFP Ownership Not Verified. Actual Owner: ", pfpOwner);
+                  pfpVerified.textContent =
+                    "✖️ PFP Not Owned by Account. The Verified Owner: ";
+                  console.log(
+                    "PFP Ownership Not Verified. Actual Owner: ",
+                    pfpOwner,
+                  );
                   pfpActualOwner.style.display = "block";
                   pfpActualOwner.textContent = pfpOwner;
                 }
               } else {
-                pfpVerified.textContent = "[Error connecting to contract - using BLONKS as placeholder]";
+                pfpVerified.textContent =
+                  "[Error connecting to contract - using BLONKS as placeholder]";
               }
               try {
                 if (chain == "mainnet") {
-                  tokenURI = await EE_NFTContract_Alchemy.methods.tokenURI(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  tokenURI = await EE_NFTContract_Alchemy.methods
+                    .tokenURI(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `TokenURI Error: ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "sepolia") {
-                  tokenURI = await EE_NFTContract_Alchemy_Sepolia.methods.tokenURI(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  tokenURI = await EE_NFTContract_Alchemy_Sepolia.methods
+                    .tokenURI(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `TokenURI Error: ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "optimism") {
-                  tokenURI = await EE_NFTContract_Alchemy_Optimism.methods.tokenURI(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  tokenURI = await EE_NFTContract_Alchemy_Optimism.methods
+                    .tokenURI(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `TokenURI Error: ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "base") {
-                  tokenURI = await EE_NFTContract_Alchemy_Base.methods.tokenURI(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  tokenURI = await EE_NFTContract_Alchemy_Base.methods
+                    .tokenURI(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `TokenURI Error: ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "arbitrum") {
-                  tokenURI = await EE_NFTContract_Alchemy_Arbitrum.methods.tokenURI(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  tokenURI = await EE_NFTContract_Alchemy_Arbitrum.methods
+                    .tokenURI(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `TokenURI Error: ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "polygon") {
-                  tokenURI = await EE_NFTContract_Alchemy_Polygon.methods.tokenURI(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  tokenURI = await EE_NFTContract_Alchemy_Polygon.methods
+                    .tokenURI(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `TokenURI Error: ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 } else if (chain == "zora") {
-                  tokenURI = await EE_NFTContract_Alchemy_Zora.methods.tokenURI(tokenId).call({}, function (err, res) {
-                    if (err) {
-                      console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                      return;
-                    }
-                  });
+                  tokenURI = await EE_NFTContract_Alchemy_Zora.methods
+                    .tokenURI(tokenId)
+                    .call({}, function (err, res) {
+                      if (err) {
+                        console.log(
+                          `TokenURI Error: ${err} Is the collection on the correct network?`,
+                        );
+                        return;
+                      }
+                    });
                 }
 
                 /// add other chains here
@@ -597,7 +802,10 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
                       console.error("Container not found");
                       return;
                     }
-                    if (imageData.startsWith("<?xml") || imageData.startsWith("<svg")) {
+                    if (
+                      imageData.startsWith("<?xml") ||
+                      imageData.startsWith("<svg")
+                    ) {
                       pfpcontainer.innerHTML = imageData;
                       editPfpContainer.innerHTML = imageData;
                     } else if (imageData.startsWith("data:image")) {
@@ -629,12 +837,15 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
                 showBONKSPlaceholder();
               }
             } else {
-              pfpId.textContent = "[nothing set - using random BLONKS as placeholder]";
+              pfpId.textContent =
+                "[nothing set - using random BLONKS as placeholder]";
               showBONKSPlaceholder();
             }
           } else {
-            pfpContract.textContent = "[nothing set - using BLONKS as placeholder]";
-            pfpId.textContent = "[nothing set - using random BLONKS as placeholder]";
+            pfpContract.textContent =
+              "[nothing set - using BLONKS as placeholder]";
+            pfpId.textContent =
+              "[nothing set - using random BLONKS as placeholder]";
             showBONKSPlaceholder();
           }
 
@@ -646,7 +857,10 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
           var profileLinkContainer = document.getElementById("profile-links");
 
           const socialDiv = document.createElement("div");
-          socialDiv.setAttribute("class", "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]");
+          socialDiv.setAttribute(
+            "class",
+            "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]",
+          );
           const socialName = document.createElement("h5");
           socialName.setAttribute("class", "mb-2 lg:mb-0");
           socialName.textContent = "Social:";
@@ -662,7 +876,10 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
           socialDiv.appendChild(social);
 
           const websiteDiv = document.createElement("div");
-          websiteDiv.setAttribute("class", "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]");
+          websiteDiv.setAttribute(
+            "class",
+            "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]",
+          );
           const websiteName = document.createElement("h5");
           websiteName.setAttribute("class", "mb-2 lg:mb-0");
           websiteName.textContent = "Website:";
@@ -678,7 +895,10 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
           websiteDiv.appendChild(website);
 
           const galleryDiv = document.createElement("div");
-          galleryDiv.setAttribute("class", "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]");
+          galleryDiv.setAttribute(
+            "class",
+            "mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]",
+          );
           const galleryName = document.createElement("h5");
           galleryName.setAttribute("class", "mb-2 lg:mb-0");
           galleryName.textContent = "Gallery:";
@@ -745,7 +965,8 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
             for (let i = 0; i < eeArray[1].length; i += 2) {
               if (eeArray[1][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                listItem.className =
+                  "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const linkDetail = document.createElement("code");
                 linkDetail.className = "mr-2 h-9";
                 linkDetail.textContent = eeArray[1][i + 1];
@@ -778,13 +999,17 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
             for (let i = 0; i < eeArray[2].length; i += 2) {
               if (eeArray[2][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                listItem.className =
+                  "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const associatedDetail = document.createElement("code");
                 associatedDetail.className = "mr-2 h-9";
                 associatedDetail.textContent = eeArray[2][i + 1];
                 listItem.appendChild(associatedDetail);
                 const associatedAtag = document.createElement("a");
-                associatedAtag.setAttribute("href", `${siteBase}?address=${eeArray[2][i]}`);
+                associatedAtag.setAttribute(
+                  "href",
+                  `${siteBase}?address=${eeArray[2][i]}`,
+                );
                 const associatedName = document.createElement("code");
                 associatedName.className = "ml-2 mr-2 h-9 bg-blue underline";
                 associatedName.textContent = eeArray[2][i];
@@ -832,14 +1057,22 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
             for (let i = 0; i < eeArray[3].length; i++) {
               if (eeArray[3][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-                const respectingReceivingAccountAtag = document.createElement("a");
+                listItem.className =
+                  "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                const respectingReceivingAccountAtag =
+                  document.createElement("a");
                 respectingReceivingAccountAtag.className = "underline";
-                respectingReceivingAccountAtag.setAttribute("href", `${siteBase}?address=${eeArray[3][i]}`);
+                respectingReceivingAccountAtag.setAttribute(
+                  "href",
+                  `${siteBase}?address=${eeArray[3][i]}`,
+                );
                 const respectReceivingAccount = document.createElement("code");
-                respectReceivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
+                respectReceivingAccount.className =
+                  "ml-2 mr-2 h-9 bg-blue underline";
                 respectReceivingAccount.textContent = eeArray[3][i];
-                respectingReceivingAccountAtag.appendChild(respectReceivingAccount);
+                respectingReceivingAccountAtag.appendChild(
+                  respectReceivingAccount,
+                );
                 listItem.appendChild(respectingReceivingAccountAtag);
                 const iconDiv = document.createElement("div");
                 iconDiv.className = "ml-4 flex align-center";
@@ -875,12 +1108,17 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
             for (let i = 0; i < eeArray[4].length; i++) {
               if (eeArray[4][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                listItem.className =
+                  "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const respectGivingAccountAtag = document.createElement("a");
                 respectGivingAccountAtag.className = "underline";
-                respectGivingAccountAtag.setAttribute("href", `${siteBase}?address=${eeArray[4][i]}`);
+                respectGivingAccountAtag.setAttribute(
+                  "href",
+                  `${siteBase}?address=${eeArray[4][i]}`,
+                );
                 const respectGivingAccount = document.createElement("code");
-                respectGivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
+                respectGivingAccount.className =
+                  "ml-2 mr-2 h-9 bg-blue underline";
                 respectGivingAccount.textContent = eeArray[4][i];
                 respectGivingAccountAtag.appendChild(respectGivingAccount);
                 listItem.appendChild(respectGivingAccountAtag);
@@ -937,9 +1175,11 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
             for (let i = 0; i < eeArray[5].length; i += 2) {
               if (eeArray[5][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex flex-wrap flex-row items-start lg:flex-row";
+                listItem.className =
+                  "mb-2 flex flex-wrap flex-row items-start lg:flex-row";
                 const noteDiv = document.createElement("div");
-                noteDiv.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                noteDiv.className =
+                  "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const noteDetail = document.createElement("code");
                 noteDetail.className = "mr-2 h-9";
                 noteDetail.textContent = eeArray[5][i + 1];
@@ -948,7 +1188,10 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
                 centeringDiv = document.createElement("div");
                 centeringDiv.className = "flex flex-wrap min-w-10 items-center";
                 const noteSenderAtag = document.createElement("a");
-                noteSenderAtag.setAttribute("href", `${siteBase}?address=${eeArray[5][i]}`);
+                noteSenderAtag.setAttribute(
+                  "href",
+                  `${siteBase}?address=${eeArray[5][i]}`,
+                );
                 const noteSender = document.createElement("code");
                 noteSender.className = "ml-2 mr-2 h-9 bg-blue underline";
                 noteSender.textContent = eeArray[5][i];
@@ -984,10 +1227,16 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
                 if (currentAccount) {
                   if (account.toLowerCase() == currentAccount.toLowerCase()) {
                     var thisDelete = document.createElement("button");
-                    thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center");
+                    thisDelete.setAttribute(
+                      "class",
+                      "mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center",
+                    );
                     thisDelete.setAttribute("data-delete", "");
                     var deleteImg = document.createElement("img");
-                    deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
+                    deleteImg.setAttribute(
+                      "class",
+                      "m-auto h-3/5 w-3/5 object-contain",
+                    );
                     deleteImg.setAttribute("src", "./svg/delete.svg");
                     deleteImg.setAttribute("alt", "Wallet Logo");
                     thisDelete.appendChild(deleteImg);
@@ -1044,8 +1293,16 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
     // if edit mode is in the url then toggle edit mode
     if (window.location.href.includes("edit")) {
       toggleClasses(document.body, ["edit"], []);
-      toggleClasses(edit_btn, ["text-secondary", "bg-main"], ["text-main", "bg-orange"]);
-      toggleClasses(view_btn, ["text-main", "bg-orange"], ["text-secondary", "bg-main"]);
+      toggleClasses(
+        edit_btn,
+        ["text-secondary", "bg-main"],
+        ["text-main", "bg-orange"],
+      );
+      toggleClasses(
+        view_btn,
+        ["text-main", "bg-orange"],
+        ["text-secondary", "bg-main"],
+      );
 
       console.log(module_view_arr);
       for (let i = 0; i < module_view_arr.length; i++) {
@@ -1084,8 +1341,16 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
 
     edit_btn.addEventListener("click", () => {
       toggleClasses(document.body, ["edit"], []);
-      toggleClasses(edit_btn, ["text-secondary", "bg-main"], ["text-main", "bg-orange"]);
-      toggleClasses(view_btn, ["text-main", "bg-orange"], ["text-secondary", "bg-main"]);
+      toggleClasses(
+        edit_btn,
+        ["text-secondary", "bg-main"],
+        ["text-main", "bg-orange"],
+      );
+      toggleClasses(
+        view_btn,
+        ["text-main", "bg-orange"],
+        ["text-secondary", "bg-main"],
+      );
 
       toggleView(module_edit_arr);
 
@@ -1104,8 +1369,16 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
 
     view_btn.addEventListener("click", () => {
       toggleClasses(document.body, ["edit"], []);
-      toggleClasses(edit_btn, ["text-main", "bg-orange"], ["text-secondary", "bg-main"]);
-      toggleClasses(view_btn, ["text-secondary", "bg-main"], ["text-main", "bg-orange"]);
+      toggleClasses(
+        edit_btn,
+        ["text-main", "bg-orange"],
+        ["text-secondary", "bg-main"],
+      );
+      toggleClasses(
+        view_btn,
+        ["text-secondary", "bg-main"],
+        ["text-main", "bg-orange"],
+      );
 
       for (let i = 0; i < module_edit_arr.length; i++) {
         toggleView("view");
@@ -1137,7 +1410,9 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
 
           // query the data-field inside the tags module
           const field = parent_module.querySelector("[data-module-edit-field]");
-          const fieldset = parent_module.querySelector("[data-module-fieldset]");
+          const fieldset = parent_module.querySelector(
+            "[data-module-fieldset]",
+          );
 
           // create a new field but without the value and do not clone it
           const new_field = field.cloneNode(true);
@@ -1162,19 +1437,26 @@ if (window.location.pathname == "/" || window.location.pathname.includes("addres
       console.error("Container not found");
       return;
     }
-    const BLONKS_Alchemy = new web3Main.eth.Contract(BLONKS_ABI, BLONKS_CONTRACT);
+    const BLONKS_Alchemy = new web3Main.eth.Contract(
+      BLONKS_ABI,
+      BLONKS_CONTRACT,
+    );
     // let renderer = 0;
     let renderer = Math.floor(Math.random() * 4);
     let randTokenId = Math.floor(Math.random() * 4444);
     let rendererStrings = ["BLONKS", "DarkBLONKS", "PepeBLONKS", "BLOOPS"];
     try {
       // BLONKSsvg = await BLONKS_Alchemy.methods.RANDOM_RENDER_SVG(renderer).call({}, function (err, res) {
-      BLONKSsvg = await BLONKS_Alchemy.methods.PREVIEW_SHAPESHIFTER_SVG(randTokenId, account, renderer).call({}, function (err, res) {
-        if (err) {
-          console.log(`BLONKS RENDER Error: ${err} Is the collection on the correct network?`);
-          return;
-        }
-      });
+      BLONKSsvg = await BLONKS_Alchemy.methods
+        .PREVIEW_SHAPESHIFTER_SVG(randTokenId, account, renderer)
+        .call({}, function (err, res) {
+          if (err) {
+            console.log(
+              `BLONKS RENDER Error: ${err} Is the collection on the correct network?`,
+            );
+            return;
+          }
+        });
     } catch (errorMessage) {
       error = true;
     }

@@ -1,11 +1,26 @@
 let currentChainId = null;
-const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`);
-const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`);
-const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`);
-const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`);
-const web3Arbitrum = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`);
-const web3Polygon = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`);
-const web3Zora = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`);
+const web3Main = new Web3(
+  `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`,
+);
+const web3Sepolia = new Web3(
+  `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`,
+);
+const web3Optimism = new Web3(
+  `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`,
+);
+const web3Base = new Web3(
+  `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`,
+);
+const web3Arbitrum = new Web3(
+  `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`,
+);
+const web3Polygon = new Web3(
+  `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`,
+);
+const web3Zora = new Web3(
+  `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`,
+);
+
 let currentChain = null;
 let chainIndex = null;
 let currentAccount = null;
@@ -67,7 +82,9 @@ let chainParams = new URLSearchParams(window.location.search);
 let EE_ADDRESS;
 if (chainParams.has("chain")) {
   //Find contract address based on search query
-  var findChainID = chains.find((o) => o.id === Number(chainParams.get("chain")));
+  var findChainID = chains.find(
+    (o) => o.id === Number(chainParams.get("chain")),
+  );
   chainIndex = chains.indexOf(findChainID);
   EE_ADDRESS = chains[chainIndex].contractAddress;
 } else {
@@ -75,11 +92,15 @@ if (chainParams.has("chain")) {
   if (currentAccount) {
     //Find contract address based on wallet chainID
     window.addEventListener("load", () => {
-      var findChainID = chains.find((o) => o.id === Number(chainParams.get("chain")));
+      var findChainID = chains.find(
+        (o) => o.id === Number(chainParams.get("chain")),
+      );
       chainIndex = chains.indexOf(findChainID);
       EE_ADDRESS = chains[chainIndex].contractAddress;
     });
-    console.log("successfully used network from metamask, " + chains[chainIndex].name);
+    console.log(
+      "successfully used network from metamask, " + chains[chainIndex].name,
+    );
   } else {
     //Use default (mainnet)
     console.log("defaulted to mainnet");
@@ -87,13 +108,34 @@ if (chainParams.has("chain")) {
     EE_ADDRESS = "0x1f4126A9D34811E55B9506F011aC1df1396ac909";
   }
 }
-const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contractAddress);
-const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, chains[1].contractAddress);
-const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, chains[2].contractAddress);
-const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
-const EE_Contract_Alchemy_Arbitrum = new web3Base.eth.Contract(EE_ABI, chains[4].contractAddress);
-const EE_Contract_Alchemy_Polygon = new web3Base.eth.Contract(EE_ABI, chains[5].contractAddress);
-const EE_Contract_Alchemy_Zora = new web3Base.eth.Contract(EE_ABI, chains[6].contractAddress);
+const EE_Contract_Alchemy = new web3Main.eth.Contract(
+  EE_ABI,
+  chains[0].contractAddress,
+);
+const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(
+  EE_ABI,
+  chains[1].contractAddress,
+);
+const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(
+  EE_ABI,
+  chains[2].contractAddress,
+);
+const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(
+  EE_ABI,
+  chains[3].contractAddress,
+);
+const EE_Contract_Alchemy_Arbitrum = new web3Base.eth.Contract(
+  EE_ABI,
+  chains[4].contractAddress,
+);
+const EE_Contract_Alchemy_Polygon = new web3Base.eth.Contract(
+  EE_ABI,
+  chains[5].contractAddress,
+);
+const EE_Contract_Alchemy_Zora = new web3Base.eth.Contract(
+  EE_ABI,
+  chains[6].contractAddress,
+);
 
 const connectButton = document.querySelector("[data-connect]");
 const connectButtonText = document.querySelector("[data-connect] span");
@@ -178,7 +220,10 @@ function startApp(provider) {
     .catch(handleError);
 
   // Check for existing accounts
-  ethereum.request({ method: "eth_accounts" }).then(handleAccountsChanged).catch(handleError);
+  ethereum
+    .request({ method: "eth_accounts" })
+    .then(handleAccountsChanged)
+    .catch(handleError);
 }
 
 function handleChainChanged() {
@@ -198,7 +243,10 @@ function handleAccountsChanged(accounts) {
     currentAccount = accounts[0];
     console.log("Account connected:", currentAccount);
     console.log(currentAccount);
-    connectButtonText.textContent = typeof currentAccount == "string" ? `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}` : currentAccount;
+    connectButtonText.textContent =
+      typeof currentAccount == "string"
+        ? `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}`
+        : currentAccount;
   }
 }
 
