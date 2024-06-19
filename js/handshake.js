@@ -2,24 +2,6 @@ let currentChainId = null;
 const web3Main = new Web3(
   `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`,
 );
-const web3Sepolia = new Web3(
-  `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`,
-);
-const web3Optimism = new Web3(
-  `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`,
-);
-const web3Base = new Web3(
-  `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`,
-);
-const web3Arbitrum = new Web3(
-  `https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`,
-);
-const web3Polygon = new Web3(
-  `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`,
-);
-const web3Zora = new Web3(
-  `https://zora-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`,
-);
 
 let currentChain = null;
 let chainIndex = null;
@@ -33,42 +15,49 @@ let chains = [
     id: 1,
     explorerBaseUrl: "https://etherscan.io/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
+    endpoint: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`,
   },
   {
     name: "sepolia",
     id: 11155111,
     explorerBaseUrl: "https://sepolia.etherscan.io/address/",
     contractAddress: "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb",
+    endpoint: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`,
   },
   {
     name: "optimism",
     id: 10,
     explorerBaseUrl: "https://optimistic.etherscan.io/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
+    endpoint: `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`,
   },
   {
     name: "base",
     id: 8453,
     explorerBaseUrl: "https://basescan.org/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
+    endpoint: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`,
   },
   {
     name: "arbitrum",
     id: 42161,
     explorerBaseUrl: "https://arbiscan.io/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
+    endpoint: `https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`,
   },
   {
     name: "polygon",
     id: 137,
     explorerBaseUrl: "https://polygonscan.com/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
+    endpoint: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`,
   },
   {
     name: "zora",
     id: 7777777,
     explorerBaseUrl: "https://zora.superscan.network/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
+    endpoint: `https://zora-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`,
   },
   {
     name: "blast",
@@ -82,6 +71,7 @@ let chainParams = new URLSearchParams(window.location.search);
 let EE_ADDRESS;
 if (chainParams.has("chain")) {
   //Find contract address based on search query
+  console.log("trying to use network from url param");
   var findChainID = chains.find(
     (o) => o.id === Number(chainParams.get("chain")),
   );
@@ -108,33 +98,15 @@ if (chainParams.has("chain")) {
     EE_ADDRESS = "0x1f4126A9D34811E55B9506F011aC1df1396ac909";
   }
 }
-const EE_Contract_Alchemy = new web3Main.eth.Contract(
+
+// Create a chain instance based on chainIndex
+const { endpoint } = chains[chainIndex];
+const web3Universal = new Web3(endpoint);
+
+// Create a contract object based on chainIndex
+const EE_Contract_Universal = new web3Universal.eth.Contract(
   EE_ABI,
-  chains[0].contractAddress,
-);
-const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(
-  EE_ABI,
-  chains[1].contractAddress,
-);
-const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(
-  EE_ABI,
-  chains[2].contractAddress,
-);
-const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(
-  EE_ABI,
-  chains[3].contractAddress,
-);
-const EE_Contract_Alchemy_Arbitrum = new web3Arbitrum.eth.Contract(
-  EE_ABI,
-  chains[4].contractAddress,
-);
-const EE_Contract_Alchemy_Polygon = new web3Polygon.eth.Contract(
-  EE_ABI,
-  chains[5].contractAddress,
-);
-const EE_Contract_Alchemy_Zora = new web3Zora.eth.Contract(
-  EE_ABI,
-  chains[6].contractAddress,
+  EE_ADDRESS,
 );
 
 const connectButton = document.querySelector("[data-connect]");

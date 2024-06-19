@@ -319,210 +319,87 @@ if (
       console.log(
         "Checking account permissions for " + account + " on " + chain + "...",
       );
-      try {
-        if (chain == "mainnet") {
-          permissions = await EE_Contract_Alchemy.methods
-            .permissions(account)
-            .call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
-        } else if (chain == "sepolia") {
-          permissions = await EE_Contract_Alchemy_Sepolia.methods
-            .permissions(account)
-            .call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
-        } else if (chain == "optimism") {
-          permissions = await EE_Contract_Alchemy_Optimism.methods
-            .permissions(account)
-            .call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
-        } else if (chain == "base") {
-          permissions = await EE_Contract_Alchemy_Base.methods
-            .permissions(account)
-            .call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
-        } else if (chain == "arbitrum") {
-          permissions = await EE_Contract_Alchemy_Arbitrum.methods
-            .permissions(account)
-            .call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
-        } else if (chain == "polygon") {
-          permissions = await EE_Contract_Alchemy_Polygon.methods
-            .permissions(account)
-            .call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
-        } else if (chain == "zora") {
-          permissions = await EE_Contract_Alchemy_Zora.methods
-            .permissions(account)
-            .call({}, function (err, res) {
-              if (err) {
-                console.log(err);
-                return;
-              }
-            });
-        }
+      permissions = await EE_Contract_Universal.methods
+        .permissions(account)
+        .call();
 
-        /// add other chains here
+      // Destructure the permissions object
+      const { composable, accountIsBlocked, moderator, verificationResponse } =
+        permissions;
 
-        ({ composable, accountIsBlocked, moderator, verificationResponse } =
-          permissions);
+      console.log("Permissions retrieved: ", permissions);
 
-        // Handle address copy link
-        function buildCopyAccount(a) {
-          if (a) {
-            a.addEventListener("click", () => {
-              navigator.clipboard.writeText(account);
-            });
-            a.addEventListener("mouseover", () => {
-              a.style.cursor = "pointer";
-            });
-            a.addEventListener("mouseout", () => {
-              a.style.cursor = "";
-            });
-          }
+      // Handle address copy link
+      function buildCopyAccount(a) {
+        if (a) {
+          a.addEventListener("click", () => {
+            navigator.clipboard.writeText(account);
+          });
+          a.addEventListener("mouseover", () => {
+            a.style.cursor = "pointer";
+          });
+          a.addEventListener("mouseout", () => {
+            a.style.cursor = "";
+          });
         }
-        const copyAccount = document.getElementById("account-copy");
-        const copyAccountEdit = document.getElementById("edit-account-copy");
-        buildCopyAccount(copyAccount);
-        buildCopyAccount(copyAccountEdit);
-
-        // Handle composable icons and tooltip
-        console.log("Permissions retrieved: ", permissions);
-        let accountStatus = "";
-        if (composable) {
-          accountComposableElementTrue.style.display = "block";
-          accountComposableElementFalse.style.display = "hidden";
-          accountEditComposableElementTrue.style.display = "block";
-          accountEditComposableElementFalse.style.display = "hidden";
-
-          accountStatus += "Account is composable. ";
-        } else {
-          accountComposableElementTrue.style.display = "hidden";
-          accountComposableElementFalse.style.display = "block";
-          accountEditComposableElementTrue.style.display = "hidden";
-          accountEditComposableElementFalse.style.display = "block";
-          accountStatus +=
-            "Account is not composable (may not have set up an EtherEthos profile). ";
-        }
-        if (accountIsBlocked) {
-          accountBlockedElement.style.display = "block";
-          accountEditBlockedElement.style.display = "block";
-          accountStatus += "Account is blocked! ";
-        }
-        if (moderator) {
-          accountModeratorElement.style.display = "block";
-          accountEditModeratorElement.style.display = "block";
-          accountStatus += "Account is not a moderator.";
-        }
-        if (verificationResponse.length > 0) {
-          accountVerificationElement.textContent = verificationResponse;
-          console.log(verificationResponse);
-        } else {
-          accountVerificationElement.textContent = "[nothing set]";
-        }
-        console.log(accountStatus);
-        accountStatusElement.forEach((element) => {
-          element.textContent = accountStatus;
-        });
-        accountComposableTooltip.textContent = accountStatus;
-        accountEditComposableTooltip.textContent = accountStatus;
-      } catch (error) {
-        console.log(error);
-        error = true;
       }
+      const copyAccount = document.getElementById("account-copy");
+      const copyAccountEdit = document.getElementById("edit-account-copy");
+      buildCopyAccount(copyAccount);
+      buildCopyAccount(copyAccountEdit);
 
+      // Handle composable icons and tooltip
+      let accountStatus = "";
       if (composable) {
+        accountComposableElementTrue.style.display = "block";
+        accountComposableElementFalse.style.display = "hidden";
+        accountEditComposableElementTrue.style.display = "block";
+        accountEditComposableElementFalse.style.display = "hidden";
+
+        accountStatus += "Account is composable. ";
+      } else {
+        accountComposableElementTrue.style.display = "hidden";
+        accountComposableElementFalse.style.display = "block";
+        accountEditComposableElementTrue.style.display = "hidden";
+        accountEditComposableElementFalse.style.display = "block";
+        accountStatus +=
+          "Account is not composable (may not have set up an EtherEthos profile). ";
+      }
+      if (accountIsBlocked) {
+        accountBlockedElement.style.display = "block";
+        accountEditBlockedElement.style.display = "block";
+        accountStatus += "Account is blocked! ";
+      }
+      if (moderator) {
+        accountModeratorElement.style.display = "block";
+        accountEditModeratorElement.style.display = "block";
+        accountStatus += "Account is a moderator.";
+      }
+      if (verificationResponse.length > 0) {
+        accountVerificationElement.textContent = verificationResponse;
+        console.log(verificationResponse);
+      } else {
+        accountVerificationElement.textContent = "[nothing set]";
+      }
+      console.log(accountStatus);
+      accountStatusElement.forEach((element) => {
+        element.textContent = accountStatus;
+      });
+      accountComposableTooltip.textContent = accountStatus;
+      accountEditComposableTooltip.textContent = accountStatus;
+
+      // Check and Use Composable for Data Retrieval
+      if (permissions && composable) {
         console.log(`Attempting to retrieve account from ${chain}...`);
         try {
-          if (chain == "mainnet") {
-            eeArray = await EE_Contract_Alchemy.methods
-              .assembleAccountData(account)
-              .call({}, function (err, res) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-              });
-          } else if (chain == "sepolia") {
-            eeArray = await EE_Contract_Alchemy_Sepolia.methods
-              .assembleAccountData(account)
-              .call({}, function (err, res) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-              });
-          } else if (chain == "optimism") {
-            eeArray = await EE_Contract_Alchemy_Optimism.methods
-              .assembleAccountData(account)
-              .call({}, function (err, res) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-              });
-          } else if (chain == "base") {
-            eeArray = await EE_Contract_Alchemy_Base.methods
-              .assembleAccountData(account)
-              .call({}, function (err, res) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-              });
-          } else if (chain == "arbitrum") {
-            eeArray = await EE_Contract_Alchemy_Arbitrum.methods
-              .assembleAccountData(account)
-              .call({}, function (err, res) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-              });
-          } else if (chain == "polygon") {
-            eeArray = await EE_Contract_Alchemy_Polygon.methods
-              .assembleAccountData(account)
-              .call({}, function (err, res) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-              });
-          } else if (chain == "zora") {
-            eeArray = await EE_Contract_Alchemy_Zora.methods
-              .assembleAccountData(account)
-              .call({}, function (err, res) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-              });
-          }
-
-          /// add other chains here
+          eeArray = await EE_Contract_Universal.methods
+            .assembleAccountData(account)
+            .call({}, function (err, res) {
+              if (err) {
+                console.log(err);
+                return;
+              }
+            });
         } catch (errorMessage) {
           error = true;
           console.log(errorMessage);
@@ -530,11 +407,13 @@ if (
       } else {
         console.log("Account Not Composable, not retrieving data");
       }
+
       if (error) {
         console.log("No Account Was Retrived");
       } else {
         //toggle composablility button should be available on either condition
         console.log("Account Retrieved");
+        console.log(eeArray);
         var composableButton = document.getElementById("composable-button");
         composableButton.addEventListener("click", () => {
           console.log("toggling composability");
