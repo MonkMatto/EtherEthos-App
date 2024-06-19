@@ -12,13 +12,13 @@ const web3Base = new Web3(
   `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`,
 );
 const web3Arbitrum = new Web3(
-  `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`,
+  `https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`,
 );
 const web3Polygon = new Web3(
-  `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`,
+  `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`,
 );
 const web3Zora = new Web3(
-  `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`,
+  `https://zora-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`,
 );
 
 let currentChain = null;
@@ -124,15 +124,15 @@ const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(
   EE_ABI,
   chains[3].contractAddress,
 );
-const EE_Contract_Alchemy_Arbitrum = new web3Base.eth.Contract(
+const EE_Contract_Alchemy_Arbitrum = new web3Arbitrum.eth.Contract(
   EE_ABI,
   chains[4].contractAddress,
 );
-const EE_Contract_Alchemy_Polygon = new web3Base.eth.Contract(
+const EE_Contract_Alchemy_Polygon = new web3Polygon.eth.Contract(
   EE_ABI,
   chains[5].contractAddress,
 );
-const EE_Contract_Alchemy_Zora = new web3Base.eth.Contract(
+const EE_Contract_Alchemy_Zora = new web3Zora.eth.Contract(
   EE_ABI,
   chains[6].contractAddress,
 );

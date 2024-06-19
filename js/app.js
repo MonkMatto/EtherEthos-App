@@ -455,7 +455,7 @@ if (
       }
 
       if (composable) {
-        console.log("Attempting to retrieve account...");
+        console.log(`Attempting to retrieve account from ${chain}...`);
         try {
           if (chain == "mainnet") {
             eeArray = await EE_Contract_Alchemy.methods
