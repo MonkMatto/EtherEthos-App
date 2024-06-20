@@ -8,10 +8,6 @@ let composable,
   accountIsBlockedCheck,
   moderatorCheck,
   verificationResponseCheck;
-// arbitrum and polygon not yet supported
-// let chainIds = [1, 11155111, 10, 8453, 42161, 137];
-// let chainNames = ["mainnet", "sepolia", "optimism", "base", "arbitrum", "polygon"];
-// let chainExplorerBaseUrls = ["https://etherscan.io/address/", "https://sepolia.etherscan.io/address/", "https://optimistic.etherscan.io/address/", "https://basescan.org/address/", "https://arbiscan.io/address/", "https://polygonscan.com/address/"];
 
 let chainScan;
 let BLONKSsvg;
@@ -439,113 +435,27 @@ if (
               console.log("Token ID: ", tokenId);
               pfpId.textContent = tokenId;
 
-              const EE_NFTContract_Alchemy = new web3Main.eth.Contract(
+              const EE_NFTContract_Universal = new web3Universal.eth.Contract(
                 NFT_ABI,
                 eeArray[0][6],
               );
-              const EE_NFTContract_Alchemy_Sepolia =
-                new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Optimism =
-                new web3Optimism.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Base = new web3Base.eth.Contract(
-                NFT_ABI,
-                eeArray[0][6],
-              );
-              const EE_NFTContract_Alchemy_Arbitrum =
-                new web3Arbitrum.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Polygon =
-                new web3Polygon.eth.Contract(NFT_ABI, eeArray[0][6]);
-              const EE_NFTContract_Alchemy_Zora = new web3Zora.eth.Contract(
-                NFT_ABI,
-                eeArray[0][6],
-              );
-              // add other chains here?
 
               let pfpOwner;
 
               // add delegation check at some point to see if the account is "allowed" to use the pfp
               try {
-                if (chain == "mainnet") {
-                  pfpOwner = await EE_NFTContract_Alchemy.methods
-                    .ownerOf(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "sepolia") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Sepolia.methods
-                    .ownerOf(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "optimism") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Optimism.methods
-                    .ownerOf(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "base") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Base.methods
-                    .ownerOf(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "arbitrum") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Arbitrum.methods
-                    .ownerOf(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "polygon") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Polygon.methods
-                    .ownerOf(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "zora") {
-                  pfpOwner = await EE_NFTContract_Alchemy_Zora.methods
-                    .ownerOf(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `PFP Ownership Verification ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                }
-                console.log("PFP Owner: ", pfpOwner);
+                pfpOwner = await EE_NFTContract_Universal.methods
+                  .ownerOf(tokenId)
+                  .call({}, function (err, res) {
+                    if (err) {
+                      console.log(
+                        `PFP Ownership Verification ${err} Is the collection on the correct network?`,
+                      );
+                      return;
+                    }
+                  });
 
-                /// add other chains here
+                console.log("PFP Owner: ", pfpOwner);
               } catch (errorMessage) {
                 error = true;
               }
@@ -572,86 +482,16 @@ if (
                   "[Error connecting to contract - using BLONKS as placeholder]";
               }
               try {
-                if (chain == "mainnet") {
-                  tokenURI = await EE_NFTContract_Alchemy.methods
-                    .tokenURI(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `TokenURI Error: ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "sepolia") {
-                  tokenURI = await EE_NFTContract_Alchemy_Sepolia.methods
-                    .tokenURI(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `TokenURI Error: ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "optimism") {
-                  tokenURI = await EE_NFTContract_Alchemy_Optimism.methods
-                    .tokenURI(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `TokenURI Error: ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "base") {
-                  tokenURI = await EE_NFTContract_Alchemy_Base.methods
-                    .tokenURI(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `TokenURI Error: ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "arbitrum") {
-                  tokenURI = await EE_NFTContract_Alchemy_Arbitrum.methods
-                    .tokenURI(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `TokenURI Error: ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "polygon") {
-                  tokenURI = await EE_NFTContract_Alchemy_Polygon.methods
-                    .tokenURI(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `TokenURI Error: ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                } else if (chain == "zora") {
-                  tokenURI = await EE_NFTContract_Alchemy_Zora.methods
-                    .tokenURI(tokenId)
-                    .call({}, function (err, res) {
-                      if (err) {
-                        console.log(
-                          `TokenURI Error: ${err} Is the collection on the correct network?`,
-                        );
-                        return;
-                      }
-                    });
-                }
-
-                /// add other chains here
+                tokenURI = await EE_NFTContract_Universal.methods
+                  .tokenURI(tokenId)
+                  .call({}, function (err, res) {
+                    if (err) {
+                      console.log(
+                        `TokenURI Error: ${err} Is the collection on the correct network?`,
+                      );
+                      return;
+                    }
+                  });
               } catch (errorMessage) {
                 error = true;
               }
@@ -1198,11 +1038,9 @@ if (
     }
 
     function toggleView(section) {
-      // var isVisible = Array.from(element.classList).includes('hidden')
       var viewSection = document.getElementById("view-section");
       var editSection = document.getElementById("edit-section");
-      // console.log(viewSection, editSection)
-      // console.log(editSection.classList)
+
       if (section == "view") {
         viewSection.classList.remove("hidden");
         viewSection.classList.remove("lg:hidden");
@@ -1214,8 +1052,6 @@ if (
         viewSection.classList.add("hidden");
         viewSection.classList.add("lg:hidden");
       }
-
-      // element.forEach((el)=>console.log(Array.from(el.classList).includes('hidden')))
     }
 
     edit_btn.addEventListener("click", () => {
@@ -1325,7 +1161,6 @@ if (
     let randTokenId = Math.floor(Math.random() * 4444);
     let rendererStrings = ["BLONKS", "DarkBLONKS", "PepeBLONKS", "BLOOPS"];
     try {
-      // BLONKSsvg = await BLONKS_Alchemy.methods.RANDOM_RENDER_SVG(renderer).call({}, function (err, res) {
       BLONKSsvg = await BLONKS_Alchemy.methods
         .PREVIEW_SHAPESHIFTER_SVG(randTokenId, account, renderer)
         .call({}, function (err, res) {
@@ -1408,37 +1243,5 @@ if (
     });
   }
 }
-// async function updateSampleSVGs() {
-//   // Wiping any previous previewed SVG
-//   document.getElementById("svgPlaceholder").innerHTML = "";
-//   // Getting random renders
-//   let BLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(0).call();
-//   let DarkBLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(1).call();
-//   let PepeBLONKsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(2).call();
-//   let BLOOPsvg = await uriContractAlchemy.methods.RANDOM_RENDER_SVG(3).call();
-//   document.getElementById("BLONK-live").innerHTML = BLONKsvg;
-//   document.getElementById("DarkBLONK-live").innerHTML = DarkBLONKsvg;
-//   document.getElementById("PepeBLONK-live").innerHTML = PepeBLONKsvg;
-//   document.getElementById("BLOOP-live").innerHTML = BLOOPsvg;
-// }
-
-// function searchButton() {
-//   var submittedAccount = document.getElementById("submitted-account").value;
-//   if (submittedAccount.match(hexPat)) {
-//     searchAccount = submittedAccount;
-//     console.log("Account Address Accepted: " + searchAccount);
-//     window.location.replace(`${siteBase}?account=${searchAccount}`);
-//   } else {
-//     console.log("No Valid Account Address Provided");
-//   }
-// }
-
-// function _etherscan(address) {
-//   return `<a href="https://goerli.etherscan.io/address/${address}" target="_blank">Etherscan</a>`;
-// }
-
-// function _etherEthos(address) {
-//   return `<a href="${siteBase}?account=${address}">${address}</a>`;
-// }
 
 // const dataLegend = [["alias", "account_detail", "social", "website", "gallery", "link_priority", "pfp_contract", "pfp_id"], ["link", "link_detail"], ["EOA", "EOA_detail"], ["respecter account"], ["respecting account"], ["note", "note_detail"], ["tag"], ["badge", "badge_detail"], ["custom"]];
