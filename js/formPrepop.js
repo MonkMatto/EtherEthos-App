@@ -46,6 +46,7 @@ function prepopulate(
     )[0];
 
     editAlias.value = profileArray[0][0];
+    editAlias.maxLength = "160";
     editDetail.value = profileArray[0][1];
     editDetail.maxLength = "320";
     editPFPToken.value = profileArray[0][5];
