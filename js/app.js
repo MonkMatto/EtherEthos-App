@@ -451,8 +451,8 @@ if (
 
           // PFP DATA
           if (eeArray[0][6] != nullAddress) {
-            pfpContract.textContent = eeArray[0][6];
-            pfpContract.href = `${eeArray[0][6].slice(0, 4)}-${eeArray[0][6].slice(-4)}`;
+            pfpContract.textContent = `${eeArray[0][6].slice(0, 4)}-${eeArray[0][6].slice(-4)}`;
+            pfpContract.href = `${siteBase}?address=${eeArray[0][6]}`;
             let tokenId = parseInt(eeArray[0][7]);
             if (typeof tokenId === "number") {
               console.log("Token ID: ", tokenId);
@@ -817,7 +817,7 @@ if (
                 );
                 listItem.appendChild(respectingReceivingAccountAtag);
                 const iconDiv = document.createElement("div");
-                iconDiv.className = "ml-4 flex align-center";
+                iconDiv.className = "ml-4 flex items-center";
                 const copyButton = document.createElement("button");
                 copyButton.className = "mr-2 lg:mr-4";
                 copyButton.addEventListener("click", () => {
@@ -1003,6 +1003,7 @@ if (
           }
           if (customPresent) {
             customModule.style.display = "block";
+            customModule.className = "flex h-fit";
             customContainer.textContent = eeArray[8];
           } else {
             customModule.style.display = "none";

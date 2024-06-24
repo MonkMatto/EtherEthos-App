@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
   content: [
     "./*.{html,js}",
     "./dist/*.{html,js}",
@@ -8,12 +7,14 @@ module.exports = {
     "!./js/web3.min.js",
   ],
   theme: {
-    colors: {
-      main: "#364659",
-      secondary: "#fffcf9",
-      blue: "#DAECFC",
-      orange: "#FCECDA",
-      error: "#ff7272",
+    extend: {
+      colors: {
+        main: "#364659",
+        secondary: "#fffcf9",
+        blue: "#DAECFC",
+        orange: "#FCECDA",
+        error: "#ff7272",
+      },
     },
   },
   plugins: [],

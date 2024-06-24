@@ -1,20 +1,31 @@
-function prepopulate(profileArray, verificationData, accountPermission, chainScan) {
+function prepopulate(
+  profileArray,
+  verificationData,
+  accountPermission,
+  chainScan,
+) {
   //depopulate in case of previous account info remaining
   document.querySelectorAll('[data-edit-field="alias"]')[0].innerHTML = "";
   document.querySelectorAll('[data-edit-field="detail"]')[0].innerHTML = "";
   document.getElementById("edit-profile-links").innerHTML = "";
   document.querySelectorAll('[data-edit-field="pfp-id"]')[0].innerHTML = "";
-  document.querySelectorAll('[data-edit-field="pfp-address"]')[0].innerHTML = "";
-  document.querySelectorAll('[data-edit-field="user-verification"]')[0].innerHTML = "";
+  document.querySelectorAll('[data-edit-field="pfp-address"]')[0].innerHTML =
+    "";
+  document.querySelectorAll(
+    '[data-edit-field="user-verification"]',
+  )[0].innerHTML = "";
   document.querySelectorAll('[data-edit-field="notes"]')[0].innerHTML = "";
   document.querySelectorAll('[data-edit-field="respect"]')[0].innerHTML = "";
   document.querySelectorAll('[data-edit-field="links"]')[0].innerHTML = "";
   document.querySelectorAll('[data-edit-field="associated"]')[0].innerHTML = "";
-  document.querySelectorAll('[data-edit-field="custom-data"]')[0].innerHTML = "";
+  document.querySelectorAll('[data-edit-field="custom-data"]')[0].innerHTML =
+    "";
   //autopopulate form info when available
   if (verificationData != null) {
     //verification info prepopulate
-    const editVerification = document.querySelectorAll('[data-edit-field="user-verification"]')[0];
+    const editVerification = document.querySelectorAll(
+      '[data-edit-field="user-verification"]',
+    )[0];
     if (verificationData) {
       editVerification.value = verificationData;
     }
@@ -24,9 +35,15 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     console.log("profileArray populated, prefilling form");
     //basic info prepopulate
     const editAlias = document.querySelectorAll('[data-edit-field="alias"]')[0];
-    const editDetail = document.querySelectorAll('[data-edit-field="detail"]')[0];
-    const editPFPToken = document.querySelectorAll('[data-edit-field="pfp-id"]')[0];
-    const editPFPAddress = document.querySelectorAll('[data-edit-field="pfp-address"]')[0];
+    const editDetail = document.querySelectorAll(
+      '[data-edit-field="detail"]',
+    )[0];
+    const editPFPToken = document.querySelectorAll(
+      '[data-edit-field="pfp-id"]',
+    )[0];
+    const editPFPAddress = document.querySelectorAll(
+      '[data-edit-field="pfp-address"]',
+    )[0];
 
     editAlias.value = profileArray[0][0];
     editDetail.value = profileArray[0][1];
@@ -40,7 +57,8 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     };
 
     //profile links info prepopulate
-    const editProfileLinkContainer = document.getElementById("edit-profile-links");
+    const editProfileLinkContainer =
+      document.getElementById("edit-profile-links");
     const profileLinks = profileArray[0].slice(2, 5);
     const priorityIndex = profileArray[0][5];
     //generate fields
@@ -51,10 +69,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       thisLink.setAttribute("data-edit-item", "");
       //create name
       var thisNameContainer = document.createElement("div");
-      thisNameContainer.setAttribute("class", "w-1/2 h-full");
+      thisNameContainer.setAttribute("class", "w-fit h-full flex");
       var names = ["Social:", "Website:", "Gallery:"];
       var thisName = document.createElement("h5");
-      thisName.setAttribute("class", "mb-2 w-52 basics");
+      thisName.setAttribute("class", "mb-2 w-24 basics");
       thisName.innerHTML = names[index];
       thisNameContainer.appendChild(thisName);
       thisLink.appendChild(thisNameContainer);
@@ -63,7 +81,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       var thisInput = document.createElement("input");
       thisInput.setAttribute("type", "text");
       thisInput.setAttribute("placeholder", "Link");
-      thisInput.setAttribute("class", "mr-4 w-full max-h-10 rounded-md border border-main px-3 py-3 text-md");
+      thisInput.setAttribute(
+        "class",
+        "mr-4 w-full max-h-10 rounded-md border border-main px-3 py-3 text-md",
+      );
       thisLink.appendChild(thisInput);
 
       //add inputs to main data form
@@ -77,7 +98,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
 
       //create write button
       var thisWrite = document.createElement("button");
-      thisWrite.setAttribute("class", "mx-2 h-7 aspect-square rounded-full bg-main p-0");
+      thisWrite.setAttribute(
+        "class",
+        "mx-2 h-7 aspect-square rounded-full bg-main p-0",
+      );
       thisWrite.setAttribute("data-write", "");
       var writeImg = document.createElement("img");
       writeImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -91,7 +115,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         var linkValue = thisInput.value;
         var prefix = "http://";
         var prefixB = "https://";
-        if (!thisInput.value.includes(prefix) && !thisInput.value.includes(prefixB)) {
+        if (
+          !thisInput.value.includes(prefix) &&
+          !thisInput.value.includes(prefixB)
+        ) {
           var linkValue = "https://" + thisInput.value;
         }
         console.log(linkValue);
@@ -106,7 +133,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       //create delete button
       if (profileLinks[index]) {
         var thisDelete = document.createElement("button");
-        thisDelete.setAttribute("class", "mx-2 h-7 aspect-square rounded-full bg-main p-0");
+        thisDelete.setAttribute(
+          "class",
+          "mx-2 h-7 aspect-square rounded-full bg-main p-0",
+        );
         var deleteImg = document.createElement("img");
         deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
         deleteImg.setAttribute("src", "./svg/delete.svg");
@@ -165,7 +195,13 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     const submitAll = document.getElementById("submit-all");
     submitAll.addEventListener("click", () => {
       console.log("submitting all basics");
-      setMainBasicsToContract(allBasics.alias.value, allBasics.detail.value, allBasics.social.value, allBasics.website.value, allBasics.gallery.value);
+      setMainBasicsToContract(
+        allBasics.alias.value,
+        allBasics.detail.value,
+        allBasics.social.value,
+        allBasics.website.value,
+        allBasics.gallery.value,
+      );
     });
     const basicTitles = document.getElementsByClassName("basics");
     submitAll.addEventListener("mouseover", () => {
@@ -205,11 +241,16 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //handled dynamically
     const allTags = profileArray[7];
     if (allTags) {
-      const tagsEditParent = document.querySelectorAll('[data-edit-field="tags"]')[0];
+      const tagsEditParent = document.querySelectorAll(
+        '[data-edit-field="tags"]',
+      )[0];
       function createTagInput(tagsContainer, index, defaultInput) {
         //create the li
         var thisTag = document.createElement("li");
-        thisTag.setAttribute("class", "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+        thisTag.setAttribute(
+          "class",
+          "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+        );
         thisTag.setAttribute("data-edit-item", "");
 
         if (!defaultInput) {
@@ -217,12 +258,18 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
           var thisInput = document.createElement("input");
           thisInput.setAttribute("type", "text");
           thisInput.setAttribute("placeholder", "Tag Name");
-          thisInput.setAttribute("class", "mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+          thisInput.setAttribute(
+            "class",
+            "mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+          );
           thisInput.setAttribute("data-field-edit", "tag");
           thisTag.appendChild(thisInput);
           //create write button
           var thisWrite = document.createElement("button");
-          thisWrite.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+          thisWrite.setAttribute(
+            "class",
+            "mx-2 h-7 w-7 rounded-full bg-main p-0",
+          );
           thisWrite.setAttribute("data-write", "");
           var writeImg = document.createElement("img");
           writeImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -243,7 +290,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
           thisInput.innerHTML = defaultInput;
           thisTag.appendChild(thisInput);
           var thisDelete = document.createElement("button");
-          thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+          thisDelete.setAttribute(
+            "class",
+            "mx-2 h-7 w-7 rounded-full bg-main p-0",
+          );
           thisDelete.setAttribute("data-delete", "");
           var deleteImg = document.createElement("img");
           deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -279,20 +329,28 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //handled dynamically
     const allLinks = profileArray[1];
     if (allLinks) {
-      const linksEditParent = document.querySelectorAll('[data-edit-field="links"]')[0];
+      const linksEditParent = document.querySelectorAll(
+        '[data-edit-field="links"]',
+      )[0];
       function createLinkInput(linksContainer, index, defaultName, defaultURL) {
         indexTuple = index * 2; //should target this address in the 1d doubled array [1a, 1b, 2a, 2b]
         //'index' is for the array of tuples [[1a, 1b], [2a, 2b]]
 
         //create the li
         var thisLink = document.createElement("li");
-        thisLink.setAttribute("class", "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+        thisLink.setAttribute(
+          "class",
+          "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+        );
         thisLink.setAttribute("data-edit-item", "");
         //create input1
         var inputName = document.createElement("input");
         inputName.setAttribute("type", "text");
         inputName.setAttribute("placeholder", "Description");
-        inputName.setAttribute("class", "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+        inputName.setAttribute(
+          "class",
+          "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+        );
         thisLink.appendChild(inputName);
         //create span with ':' divider
         var thisBadgeSpan = document.createElement("span");
@@ -303,11 +361,17 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         var inputURL = document.createElement("input");
         inputURL.setAttribute("type", "text");
         inputURL.setAttribute("placeholder", "Link");
-        inputURL.setAttribute("class", "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+        inputURL.setAttribute(
+          "class",
+          "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+        );
         thisLink.appendChild(inputURL);
         //create write button
         var thisWrite = document.createElement("button");
-        thisWrite.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+        thisWrite.setAttribute(
+          "class",
+          "mx-2 h-7 w-7 rounded-full bg-main p-0",
+        );
         var writeImg = document.createElement("img");
         writeImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
         writeImg.setAttribute("src", "./svg/write.svg");
@@ -317,7 +381,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         //create delete button
         if (defaultName || defaultURL) {
           var thisDelete = document.createElement("button");
-          thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+          thisDelete.setAttribute(
+            "class",
+            "mx-2 h-7 w-7 rounded-full bg-main p-0",
+          );
           var deleteImg = document.createElement("img");
           deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
           deleteImg.setAttribute("src", "./svg/delete.svg");
@@ -346,7 +413,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
           var linkValue = inputURL.value;
           var prefix = "http://";
           var prefixB = "https://";
-          if (!inputURL.value.includes(prefix) && !inputURL.value.includes(prefixB)) {
+          if (
+            !inputURL.value.includes(prefix) &&
+            !inputURL.value.includes(prefixB)
+          ) {
             var linkValue = "https://" + inputURL.value;
           }
           console.log(linkValue);
@@ -375,20 +445,28 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //Associated accounts info prepopulate
     //handled dynamically
     const EOAs = profileArray[2];
-    const EOAEditParent = document.querySelectorAll('[data-edit-field="associated"]')[0];
+    const EOAEditParent = document.querySelectorAll(
+      '[data-edit-field="associated"]',
+    )[0];
     function createEAOInput(EOAContainer, index, defaultDesc, defaultAddress) {
       indexTuple = index * 2; //should target this address in the doubled array [1a, 1b, 2a, 2b]
       //'index' is for the array of tuples [[1a, 1b], [2a, 2b]]
 
       //create the li
       var thisEOA = document.createElement("li");
-      thisEOA.setAttribute("class", "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+      thisEOA.setAttribute(
+        "class",
+        "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+      );
       thisEOA.setAttribute("data-edit-item", "");
       //create input1
       var inputDesc = document.createElement("input");
       inputDesc.setAttribute("type", "text");
       inputDesc.setAttribute("placeholder", "Description");
-      inputDesc.setAttribute("class", "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+      inputDesc.setAttribute(
+        "class",
+        "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+      );
       inputDesc.setAttribute("data-field-edit", "associated-desc");
       thisEOA.appendChild(inputDesc);
       //create span with ':' divider
@@ -400,7 +478,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       var inputAddress = document.createElement("input");
       inputAddress.setAttribute("type", "text");
       inputAddress.setAttribute("placeholder", "Address");
-      inputAddress.setAttribute("class", "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+      inputAddress.setAttribute(
+        "class",
+        "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+      );
       inputAddress.setAttribute("data-field-edit", "associated-address");
       thisEOA.appendChild(inputAddress);
 
@@ -431,7 +512,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       //create delete button
       if (defaultAddress || defaultDesc) {
         var thisDelete = document.createElement("button");
-        thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+        thisDelete.setAttribute(
+          "class",
+          "mx-2 h-7 w-7 rounded-full bg-main p-0",
+        );
         thisDelete.setAttribute("data-delete", "");
         var deleteImg = document.createElement("img");
         deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -441,7 +525,12 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         thisEOA.appendChild(thisDelete);
 
         thisDelete.addEventListener("click", () => {
-          console.log("deleting index[", indexTuple, "and", indexTuple + 1 + "]");
+          console.log(
+            "deleting index[",
+            indexTuple,
+            "and",
+            indexTuple + 1 + "]",
+          );
           inputAddress.value = " ";
           inputDesc.value = " ";
           if (defaultAddress || defaultDesc) {
@@ -460,11 +549,23 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       }
 
       thisWrite.addEventListener("click", () => {
-        console.log(inputDesc.value, ":", inputAddress.value, "was written to index[", indexTuple, "and", indexTuple + 1 + "]");
+        console.log(
+          inputDesc.value,
+          ":",
+          inputAddress.value,
+          "was written to index[",
+          indexTuple,
+          "and",
+          indexTuple + 1 + "]",
+        );
         if (defaultAddress || defaultDesc) {
           //exists, needs to update
           console.log("updating " + indexTuple);
-          updateAssociatedAccountToContract(index, inputAddress.value, inputDesc.value);
+          updateAssociatedAccountToContract(
+            index,
+            inputAddress.value,
+            inputDesc.value,
+          );
         } else {
           //doesn't exist yet, needs a new entry
           console.log("sent new entry to tuple index", indexTuple);
@@ -484,17 +585,29 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //Notes Sent info prepopulate
     //handled dynamically
     const notes = profileArray[6];
-    const notesEditParent = document.querySelectorAll('[data-edit-field="notes"]')[0];
-    const notesViewParent = document.querySelectorAll('[data-view-field="notes"]')[0];
+    const notesEditParent = document.querySelectorAll(
+      '[data-edit-field="notes"]',
+    )[0];
+    const notesViewParent = document.querySelectorAll(
+      '[data-view-field="notes"]',
+    )[0];
 
-    function createNoteInput(notesContainer, index, defaultDesc, defaultAddress) {
+    function createNoteInput(
+      notesContainer,
+      index,
+      defaultDesc,
+      defaultAddress,
+    ) {
       indexTuple = index * 2; //should target this address in the doubled array [1a, 1b, 2a, 2b]
       //'index' is for the array of tuples [[1a, 1b], [2a, 2b]]
 
       //create a div to collapse
       //create the li
       var thisNote = document.createElement("li");
-      thisNote.setAttribute("class", "mb-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+      thisNote.setAttribute(
+        "class",
+        "mb-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+      );
       thisNote.setAttribute("data-edit-item", "");
       if (defaultAddress || defaultDesc) {
         //create display for desc
@@ -510,7 +623,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         //create anchor for address
         var thisAnchor = document.createElement("a");
 
-        thisAnchor.setAttribute("href", `${this.location.origin}?address=${defaultAddress}`);
+        thisAnchor.setAttribute(
+          "href",
+          `${this.location.origin}?address=${defaultAddress}`,
+        );
         thisAnchor.setAttribute("class", "mr-2 h-9");
         // thisNote.appendChild(thisAnchor)
         //create display for address
@@ -547,7 +663,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         if (accountPermission) {
           //create delete button
           var thisDelete = document.createElement("button");
-          thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+          thisDelete.setAttribute(
+            "class",
+            "mx-2 h-7 w-7 rounded-full bg-main p-0",
+          );
           thisDelete.setAttribute("data-delete", "");
           var deleteImg = document.createElement("img");
           deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -557,7 +676,12 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
           thisNote.appendChild(thisDelete);
 
           thisDelete.addEventListener("click", () => {
-            console.log("deleting note from 1d index[", indexTuple, "and", indexTuple + 1 + "]");
+            console.log(
+              "deleting note from 1d index[",
+              indexTuple,
+              "and",
+              indexTuple + 1 + "]",
+            );
             deleteWrittenNoteToContract(defaultAddress);
           });
         }
@@ -566,7 +690,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         var inputDesc = document.createElement("input");
         // inputDesc.setAttribute('type', 'datalist')
         inputDesc.setAttribute("placeholder", "Note Text");
-        inputDesc.setAttribute("class", "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+        inputDesc.setAttribute(
+          "class",
+          "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+        );
         inputDesc.setAttribute("data-field-edit", "associated-desc");
         thisNote.appendChild(inputDesc);
         //create span with ':' divider
@@ -596,12 +723,18 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         });
         inputAddress.setAttribute("type", "text");
         inputAddress.setAttribute("placeholder", "Target Address");
-        inputAddress.setAttribute("class", "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3");
+        inputAddress.setAttribute(
+          "class",
+          "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3",
+        );
         inputAddress.setAttribute("data-field-edit", "associated-address");
         thisNote.appendChild(inputAddress);
         //create write button
         var thisWrite = document.createElement("button");
-        thisWrite.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+        thisWrite.setAttribute(
+          "class",
+          "mx-2 h-7 w-7 rounded-full bg-main p-0",
+        );
         thisWrite.setAttribute("data-write", "");
         var writeImg = document.createElement("img");
         writeImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -611,7 +744,15 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         thisNote.appendChild(thisWrite);
 
         thisWrite.addEventListener("click", () => {
-          console.log(inputDesc.value, ":", inputAddress.value, "was written to 1d index[", indexTuple, "and", indexTuple + 1 + "]");
+          console.log(
+            inputDesc.value,
+            ":",
+            inputAddress.value,
+            "was written to 1d index[",
+            indexTuple,
+            "and",
+            indexTuple + 1 + "]",
+          );
 
           console.log("sent new note entry to tuple 2d index", indexTuple);
           setNoteToContract(inputAddress.value, inputDesc.value);
@@ -641,25 +782,36 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //handled dynamically
     const allRespects = profileArray[4];
     if (allRespects) {
-      const respectsEditParent = document.querySelectorAll('[data-edit-field="respect"]')[0];
+      const respectsEditParent = document.querySelectorAll(
+        '[data-edit-field="respect"]',
+      )[0];
       function createTagInput(respectsContainer, defaultInput) {
         //create the li
         var thisRespect = document.createElement("li");
         if (!defaultInput) {
-          thisRespect.setAttribute("class", "mb-2 flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+          thisRespect.setAttribute(
+            "class",
+            "mb-2 flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+          );
           thisRespect.setAttribute("data-edit-item", "");
           //create input
 
           var thisInput = document.createElement("input");
           thisInput.setAttribute("type", "text");
           thisInput.setAttribute("placeholder", "Address To Respect");
-          thisInput.setAttribute("class", "mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+          thisInput.setAttribute(
+            "class",
+            "mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+          );
           thisInput.setAttribute("data-field-edit", "respect");
           thisRespect.appendChild(thisInput);
 
           //create write button
           var thisWrite = document.createElement("button");
-          thisWrite.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+          thisWrite.setAttribute(
+            "class",
+            "mx-2 h-7 w-7 rounded-full bg-main p-0",
+          );
           thisWrite.setAttribute("data-write", "");
           var writeImg = document.createElement("img");
           writeImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -679,13 +831,19 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
           });
         } else {
           //style as code block
-          thisRespect.setAttribute("class", "mb-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+          thisRespect.setAttribute(
+            "class",
+            "mb-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+          );
           //display existing address
           var thisDisplay = document.createElement("code");
           thisDisplay.setAttribute("class", "mr-2 h-9 bg-blue underline");
           thisDisplay.innerHTML = defaultInput;
           var thisAnchor = document.createElement("a");
-          thisAnchor.setAttribute("href", `${this.location.origin}?address=${defaultInput}`);
+          thisAnchor.setAttribute(
+            "href",
+            `${this.location.origin}?address=${defaultInput}`,
+          );
           thisAnchor.setAttribute("class", "mr-2 h-9");
           thisAnchor.appendChild(thisDisplay);
           thisRespect.appendChild(thisAnchor);
@@ -705,10 +863,16 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
           //create delete/revoke button
           if (defaultInput) {
             var thisDelete = document.createElement("button");
-            thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+            thisDelete.setAttribute(
+              "class",
+              "mx-2 h-7 w-7 rounded-full bg-main p-0",
+            );
             thisDelete.setAttribute("data-delete", "");
             var deleteImg = document.createElement("img");
-            deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
+            deleteImg.setAttribute(
+              "class",
+              "m-auto h-3/5 w-3/5 object-contain",
+            );
             deleteImg.setAttribute("src", "./svg/delete.svg");
             deleteImg.setAttribute("alt", "Wallet Logo");
             thisDelete.appendChild(deleteImg);
@@ -736,17 +900,25 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //Custom Data info prepopulate
     //handled dynamically
     const customData = profileArray[8];
-    const CDEditParent = document.querySelectorAll('[data-edit-field="custom-data"]')[0];
+    const CDEditParent = document.querySelectorAll(
+      '[data-edit-field="custom-data"]',
+    )[0];
     function createCDInput(CDContainer, defaultInput) {
       //create the li
       var thisCD = document.createElement("li");
-      thisCD.setAttribute("class", "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+      thisCD.setAttribute(
+        "class",
+        "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+      );
       thisCD.setAttribute("data-edit-item", "");
       //create input
       var thisInput = document.createElement("input");
       thisInput.setAttribute("type", "text");
       thisInput.setAttribute("placeholder", "Data");
-      thisInput.setAttribute("class", "mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+      thisInput.setAttribute(
+        "class",
+        "mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+      );
       thisInput.setAttribute("data-field-edit", "custom-data");
       thisCD.appendChild(thisInput);
       //create write button
@@ -762,7 +934,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       //create delete button
       if (defaultInput && defaultInput != " ") {
         var thisDelete = document.createElement("button");
-        thisDelete.setAttribute("class", "mx-2 h-7 w-7 rounded-full bg-main p-0");
+        thisDelete.setAttribute(
+          "class",
+          "mx-2 h-7 w-7 rounded-full bg-main p-0",
+        );
         thisDelete.setAttribute("data-delete", "");
         var deleteImg = document.createElement("img");
         deleteImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
@@ -812,15 +987,21 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //prep object
     let allBasics = {};
     allBasics.alias = document.querySelectorAll('[data-edit-field="alias"')[0];
-    allBasics.detail = document.querySelectorAll('[data-edit-field="detail"')[0];
+    allBasics.detail = document.querySelectorAll(
+      '[data-edit-field="detail"',
+    )[0];
 
     //create profile links input
-    const editProfileLinkContainer = document.getElementById("edit-profile-links");
+    const editProfileLinkContainer =
+      document.getElementById("edit-profile-links");
     //generate input fields
     function createProfileLinkInput(container, index, value) {
       //create the li
       var thisLink = document.createElement("div");
-      thisLink.setAttribute("class", "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main");
+      thisLink.setAttribute(
+        "class",
+        "mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
+      );
       thisLink.setAttribute("data-edit-item", "");
       //create name
       var names = ["Social:", "Website:", "Gallery:"];
@@ -834,7 +1015,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
       var thisInput = document.createElement("input");
       thisInput.setAttribute("type", "text");
       thisInput.setAttribute("placeholder", "Link");
-      thisInput.setAttribute("class", "mr-4 w-2/3 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3");
+      thisInput.setAttribute(
+        "class",
+        "mr-4 w-2/3 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+      );
       thisInput.setAttribute("data-field-edit", "tag");
       thisLink.appendChild(thisInput);
 
@@ -854,7 +1038,10 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         var linkValue = thisInput.value;
         var prefix = "http://";
         var prefixB = "https://";
-        if (!thisInput.value.includes(prefix) && !thisInput.value.includes(prefixB)) {
+        if (
+          !thisInput.value.includes(prefix) &&
+          !thisInput.value.includes(prefixB)
+        ) {
           var linkValue = "https://" + thisInput.value;
         }
         console.log(linkValue);
@@ -886,7 +1073,13 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
     //button to submit all data
     const submitAll = document.getElementById("submit-all");
     submitAll.addEventListener("click", () => {
-      setMainBasicsToContract(allBasics.alias.value, allBasics.detail.value, allBasics.social.value, allBasics.website.value, allBasics.gallery.value);
+      setMainBasicsToContract(
+        allBasics.alias.value,
+        allBasics.detail.value,
+        allBasics.social.value,
+        allBasics.website.value,
+        allBasics.gallery.value,
+      );
     });
   }
 }
