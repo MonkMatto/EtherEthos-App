@@ -12,7 +12,7 @@ const createErrorMsg = (msg) => {
 
   //style
   errorBody.className =
-    "fixed bottom-0 left-0 w-full h-12 z-100 px-5 flex items-center justify-between bg-red-400";
+    "fixed bottom-0 left-0 w-full h-12 z-100 px-5 flex items-center justify-between bg-error";
   errorMsg.setAttribute("class", "text-base");
 
   closeButton.setAttribute("class", "w-1/10 aspect-square bg-red-400");

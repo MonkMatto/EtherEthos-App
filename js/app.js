@@ -291,10 +291,10 @@ if (
     if (chainIndex < 0) {
       chainIndex = 0;
       console.error(
-        `This chain is not supported, Supported networks include Ethereum, Base, Sepolia, Polygon, Arbitrum, Optimism, Zora`,
+        `This chain is not supported, defaulted to Ethereum Mainnet. Supported networks include Ethereum, Base, Sepolia, Polygon, Arbitrum, Optimism, Zora`,
       );
       createErrorMsg(
-        `This chain is not supported, Supported networks include Ethereum, Base, Sepolia, Polygon, Arbitrum, Optimism, Zora`,
+        `This chain is not supported, defaulted to Ethereum Mainnet. Supported networks include Ethereum, Base, Sepolia, Polygon, Arbitrum, Optimism, Zora`,
       );
     }
 
@@ -452,7 +452,7 @@ if (
           // PFP DATA
           if (eeArray[0][6] != nullAddress) {
             pfpContract.textContent = eeArray[0][6];
-            pfpContract.href = `${siteBase}?address=${eeArray[0][6]}`;
+            pfpContract.href = `${eeArray[0][6].slice(0, 4)}-${eeArray[0][6].slice(-4)}`;
             let tokenId = parseInt(eeArray[0][7]);
             if (typeof tokenId === "number") {
               console.log("Token ID: ", tokenId);
