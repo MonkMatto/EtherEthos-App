@@ -47,6 +47,7 @@ function prepopulate(
 
     editAlias.value = profileArray[0][0];
     editDetail.value = profileArray[0][1];
+    editDetail.maxLength = "320";
     editPFPToken.value = profileArray[0][5];
     editPFPAddress.value = profileArray[0][6];
 
@@ -79,6 +80,7 @@ function prepopulate(
 
       //create input
       var thisInput = document.createElement("input");
+      thisInput.maxLength = "160";
       thisInput.setAttribute("type", "text");
       thisInput.setAttribute("placeholder", "Link");
       thisInput.setAttribute(
@@ -256,6 +258,7 @@ function prepopulate(
         if (!defaultInput) {
           //create input
           var thisInput = document.createElement("input");
+          thisInput.maxLength = "32";
           thisInput.setAttribute("type", "text");
           thisInput.setAttribute("placeholder", "Tag Name");
           thisInput.setAttribute(
@@ -345,6 +348,7 @@ function prepopulate(
         thisLink.setAttribute("data-edit-item", "");
         //create input1
         var inputName = document.createElement("input");
+        inputName.maxLength = "160";
         inputName.setAttribute("type", "text");
         inputName.setAttribute("placeholder", "Description");
         inputName.setAttribute(
@@ -359,6 +363,7 @@ function prepopulate(
         thisLink.appendChild(thisBadgeSpan);
         //create input1
         var inputURL = document.createElement("input");
+        inputURL.maxLength = "160";
         inputURL.setAttribute("type", "text");
         inputURL.setAttribute("placeholder", "Link");
         inputURL.setAttribute(
@@ -461,6 +466,7 @@ function prepopulate(
       thisEOA.setAttribute("data-edit-item", "");
       //create input1
       var inputDesc = document.createElement("input");
+      inputDesc.maxLength = "160";
       inputDesc.setAttribute("type", "text");
       inputDesc.setAttribute("placeholder", "Description");
       inputDesc.setAttribute(
@@ -689,6 +695,7 @@ function prepopulate(
         //create input for note
         var inputDesc = document.createElement("input");
         // inputDesc.setAttribute('type', 'datalist')
+        inputDesc.maxLength = "160";
         inputDesc.setAttribute("placeholder", "Note Text");
         inputDesc.setAttribute(
           "class",
@@ -797,6 +804,7 @@ function prepopulate(
           //create input
 
           var thisInput = document.createElement("input");
+
           thisInput.setAttribute("type", "text");
           thisInput.setAttribute("placeholder", "Address To Respect");
           thisInput.setAttribute(
@@ -1013,6 +1021,7 @@ function prepopulate(
 
       //create input
       var thisInput = document.createElement("input");
+      thisInput.maxLength = "160";
       thisInput.setAttribute("type", "text");
       thisInput.setAttribute("placeholder", "Link");
       thisInput.setAttribute(
