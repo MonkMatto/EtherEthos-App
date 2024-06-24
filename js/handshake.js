@@ -81,11 +81,12 @@ if (chainParams.has("chain")) {
   console.log("trying to use network from metamask");
   if (currentAccount) {
     //Find contract address based on wallet chainID
+    console.log(`chainIndex: ${chainParams.get("chain")}`);
     window.addEventListener("load", () => {
-      var findChainID = chains.find(
-        (o) => o.id === Number(chainParams.get("chain")),
-      );
+      var findChainID = chains.find((o) => o.id === Number(currentChainId));
+
       chainIndex = chains.indexOf(findChainID);
+      console.log(`chainIndex: ${chainIndex}`);
       EE_ADDRESS = chains[chainIndex].contractAddress;
     });
     console.log(
@@ -98,16 +99,6 @@ if (chainParams.has("chain")) {
     EE_ADDRESS = "0x1f4126A9D34811E55B9506F011aC1df1396ac909";
   }
 }
-
-// Create a chain instance based on chainIndex
-const { endpoint } = chains[chainIndex];
-const web3Universal = new Web3(endpoint);
-
-// Create a contract object based on chainIndex
-const EE_Contract_Universal = new web3Universal.eth.Contract(
-  EE_ABI,
-  EE_ADDRESS,
-);
 
 const connectButton = document.querySelector("[data-connect]");
 const connectButtonText = document.querySelector("[data-connect] span");
@@ -180,7 +171,7 @@ function startApp(provider) {
       // Check if contract address of this chain ID matches the existing assumption, update if not
       var walletChain = chains.find((o) => o.id === Number(currentChainId));
       if (!chainParams.has("chain")) {
-        if (walletChain.contractAddress !== EE_ADDRESS) {
+        if (walletChain && walletChain.contractAddress !== EE_ADDRESS) {
           EE_ADDRESS = walletChain.contractAddress;
           //Re-initialize User Contract Object
           EE_Contract_User = new web3User.eth.Contract(EE_ABI, EE_ADDRESS);

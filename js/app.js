@@ -1,3 +1,5 @@
+console.log("Initializing App");
+
 let account, abbrvAccount, error, permissions, eeArray, eeBasics, chain;
 let composable,
   accountIsBlocked,
@@ -285,10 +287,31 @@ if (
   }
 
   async function _queryContract(account) {
-    console.log("_queryContract() firing");
+    //Default to mainnet if network is not supported
+    if (chainIndex < 0) {
+      chainIndex = 0;
+      console.error(
+        `This chain is not supported, Supported networks include Ethereum, Base, Sepolia, Polygon, Arbitrum, Optimism, Zora`,
+      );
+      createErrorMsg(
+        `This chain is not supported, Supported networks include Ethereum, Base, Sepolia, Polygon, Arbitrum, Optimism, Zora`,
+      );
+    }
+
+    // Create a chain instance based on chainIndex
+    const { endpoint } = chains[chainIndex];
+    const web3Universal = new Web3(endpoint);
+    console.log(`querying ${chains[chainIndex].name}`);
+
+    // Create a contract object based on chainIndex
+    const EE_Contract_Universal = new web3Universal.eth.Contract(
+      EE_ABI,
+      EE_ADDRESS,
+    );
+    console.log(`_queryContract() firing on ${chains[chainIndex].name}`);
     if (currentAccount) {
       console.log(`account ${account}, currentAccount ${currentAccount}`);
-      queriedChain = chains.find((o) => o.name === chain);
+      queriedChain = chains[chainIndex];
       if (
         account.toLowerCase() == currentAccount.toLowerCase() &&
         currentChainId == queriedChain.id
@@ -1244,4 +1267,4 @@ if (
   }
 }
 
-// const dataLegend = [["alias", "account_detail", "social", "website", "gallery", "link_priority", "pfp_contract", "pfp_id"], ["link", "link_detail"], ["EOA", "EOA_detail"], ["respecter account"], ["respecting account"], ["note", "note_detail"], ["tag"], ["badge", "badge_detail"], ["custom"]];
+console.log("App initialization complete.");
