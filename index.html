@@ -85,7 +85,7 @@
     </section>
 
 
-    <main data-main class="main view relative p-4 md:p-8 lg:px-24 hidden">
+    <main data-main class="main view relative p-4 md:p-8 xl:px-24 hidden">
        
       <!-- PUBLIC DATA -->
       <section id="view-section" data-module="view-section">
@@ -186,7 +186,7 @@
               <h3 class="title">Tags</h3>
               <p class="subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
             </div>
-            <ul data-content-list data-content="tags" class="mt-4 flex">
+            <ul data-content-list data-content="tags" class="mt-4 flex flex-wrap">
             </ul>
             <br>
           <hr class="mb-4" />
@@ -212,7 +212,7 @@
         <!-- ASSOCIATED ACCOUNTS -->
         <section data-module="associated" class="associated module mb-8 hidden">
           <div data-module-view class="module-view">
-            <div class="w-full md:w-3/4">
+            <div class="w-full 3xl:w-3/4">
               <h3 class="title">Associated Accounts</h3>
               <p class="subtitle">Note that the detail displayed beside each address was submitted by the currently displayed account - it is not the address' alias.</p>
             </div>
@@ -231,7 +231,7 @@
               <h3 class="title">Respect</h3>
               <p class="subtitle">Accounts can 'respect' other accounts, and doing so grants them permission to add a note to their EtherEthos profile.</p>
             </div>
-            <div class="my-4 grid grid-cols-1 gap-4 lg:my-8 lg:grid-cols-2">
+            <div class="my-4 grid grid-cols-1 gap-4 xl:my-8 xl:grid-cols-2">
               <!-- Account is respected by...-->
               <div>
                 <h4 text-content="respected-heading" class="hidden"><span data-account-name>[account address]</span> is respected by:</h4>
@@ -303,7 +303,7 @@
             </div>
             <ul data-content-list class="mt-4 flex">
               <li class="tag-item mr-2">
-                <code data-content-text data-content="custom" class="h-9">[custom-data]</code>
+                <code data-content-text data-content="custom" class="h-fit">[custom-data]</code>
               </li>
             </ul>
             <br>
@@ -517,7 +517,8 @@
 
     </main>
   </body>
-  <script src="LockedAPIKeys.js"></script>
+  <!-- <script src="LockedAPIKeys.js"></script> -->
+  <script src="DevAPIKeys.js"></script>
   <script src="js/web3.min.js"></script>
   <script src="js/EE_ABI.js"></script>
   <script src="js/NFT_ABI.js"></script>

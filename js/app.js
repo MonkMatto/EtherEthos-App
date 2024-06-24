@@ -680,9 +680,9 @@ if (
             for (let i = 0; i < eeArray[7].length; i++) {
               if (eeArray[7][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "tag-item mr-2";
+                listItem.className = "tag-item mr-2 mt-2 h-fit";
                 const codeElement = document.createElement("code");
-                codeElement.className = "h-9";
+                codeElement.className = "h-full min-h-9";
                 codeElement.setAttribute("data-content", "tag");
                 codeElement.textContent = eeArray[7][i];
                 listItem.appendChild(codeElement);
@@ -708,9 +708,9 @@ if (
               if (eeArray[1][i].length > 0) {
                 const listItem = document.createElement("li");
                 listItem.className =
-                  "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                  "mb-2 flex h-fit items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const linkDetail = document.createElement("code");
-                linkDetail.className = "mr-2 h-9";
+                linkDetail.className = "mr-2 h-9 h-fit";
                 linkDetail.textContent = eeArray[1][i + 1];
                 listItem.appendChild(linkDetail);
                 const linkAtag = document.createElement("a");
@@ -742,9 +742,10 @@ if (
               if (eeArray[2][i].length > 0) {
                 const listItem = document.createElement("li");
                 listItem.className =
-                  "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                  "mb-4 h-fit flex items-center flex-wrap before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const associatedDetail = document.createElement("code");
-                associatedDetail.className = "mr-2 h-9";
+                associatedDetail.className =
+                  "mr-2 h-fit min-h-9 max-w-1/2 text-wrap";
                 associatedDetail.textContent = eeArray[2][i + 1];
                 listItem.appendChild(associatedDetail);
                 const associatedAtag = document.createElement("a");
@@ -753,7 +754,8 @@ if (
                   `${siteBase}?address=${eeArray[2][i]}`,
                 );
                 const associatedName = document.createElement("code");
-                associatedName.className = "ml-2 mr-2 h-9 bg-blue underline";
+                associatedName.className =
+                  "ml-2 mt-2 mr-2 h-9 bg-blue underline";
                 associatedName.textContent = eeArray[2][i];
                 associatedAtag.appendChild(associatedName);
                 listItem.appendChild(associatedAtag);
@@ -851,7 +853,7 @@ if (
               if (eeArray[4][i].length > 0) {
                 const listItem = document.createElement("li");
                 listItem.className =
-                  "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                  "mb-2 flex flex-wrap items-center before:mr-2 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const respectGivingAccountAtag = document.createElement("a");
                 respectGivingAccountAtag.className = "underline";
                 respectGivingAccountAtag.setAttribute(
