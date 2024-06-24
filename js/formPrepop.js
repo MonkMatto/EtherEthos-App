@@ -693,34 +693,6 @@ function prepopulate(
           });
         }
       } else {
-<<<<<<< HEAD
-        //create input for note
-        var inputDesc = document.createElement("input");
-        // inputDesc.setAttribute('type', 'datalist')
-        inputDesc.maxLength = "160";
-        inputDesc.setAttribute("placeholder", "Note Text");
-        inputDesc.setAttribute(
-          "class",
-          "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
-        );
-        inputDesc.setAttribute("data-field-edit", "associated-desc");
-        thisNote.appendChild(inputDesc);
-        //create span with ':' divider
-        var thisEOASpan = document.createElement("span");
-        thisEOASpan.setAttribute("class", "mx-2");
-        thisEOASpan.innerHTML = ":";
-        thisNote.appendChild(thisEOASpan);
-        //create input for address
-        var inputAddress = document.createElement("select");
-        var respectingAccounts = profileArray[3];
-        respectingAccounts.map((a) => {
-          //only add option if no note has already been sent
-          var alreadySent = false;
-          var sent = profileArray[6];
-          sent.map((b) => {
-            if (b.toLowerCase() == a.toLowerCase()) {
-              alreadySent = true;
-=======
         if (profileArray[3].length > 0) {
           //create input for note
           var inputDesc = document.createElement("input");
@@ -755,7 +727,6 @@ function prepopulate(
               thisOption.innerHTML = a;
               console.log(a);
               inputAddress.appendChild(thisOption);
->>>>>>> d12ff495914411c772625fde8b86c65b1d3b946b
             }
           });
           inputAddress.setAttribute("type", "text");
