@@ -92,7 +92,7 @@ const createNoWalletMsg = (msg) => {
 
   //style
   statusBody.className =
-    "bg-red-400 fixed top-half left-0 w-full h-28 z-100 px-5 flex items-center justify-between";
+    "fixed top-half left-0 w-full h-28 z-100 px-5 flex items-center justify-between bg-error";
 
   // statusMsg.setAttribute('class', '')
   closeButton.setAttribute("class", "w-1/10 aspect-square bg-red-400");
