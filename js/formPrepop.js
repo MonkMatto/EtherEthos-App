@@ -604,6 +604,7 @@ function prepopulate(
       //create a div to collapse
       //create the li
       var thisNote = document.createElement("li");
+
       thisNote.setAttribute(
         "class",
         "mb-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main",
@@ -686,81 +687,87 @@ function prepopulate(
           });
         }
       } else {
-        //create input for note
-        var inputDesc = document.createElement("input");
-        // inputDesc.setAttribute('type', 'datalist')
-        inputDesc.setAttribute("placeholder", "Note Text");
-        inputDesc.setAttribute(
-          "class",
-          "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
-        );
-        inputDesc.setAttribute("data-field-edit", "associated-desc");
-        thisNote.appendChild(inputDesc);
-        //create span with ':' divider
-        var thisEOASpan = document.createElement("span");
-        thisEOASpan.setAttribute("class", "mx-2");
-        thisEOASpan.innerHTML = ":";
-        thisNote.appendChild(thisEOASpan);
-        //create input for address
-        var inputAddress = document.createElement("select");
-        var respectingAccounts = profileArray[3];
-        respectingAccounts.map((a) => {
-          //only add option if no note has already been sent
-          var alreadySent = false;
-          var sent = profileArray[6];
-          sent.map((b) => {
-            if (b.toLowerCase() == a.toLowerCase()) {
-              alreadySent = true;
+        if (profileArray[3].length > 0) {
+          //create input for note
+          var inputDesc = document.createElement("input");
+          // inputDesc.setAttribute('type', 'datalist')
+          inputDesc.setAttribute("placeholder", "Note Text");
+          inputDesc.setAttribute(
+            "class",
+            "max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3",
+          );
+          inputDesc.setAttribute("data-field-edit", "associated-desc");
+          thisNote.appendChild(inputDesc);
+          //create span with ':' divider
+          var thisEOASpan = document.createElement("span");
+          thisEOASpan.setAttribute("class", "mx-2");
+          thisEOASpan.innerHTML = ":";
+          thisNote.appendChild(thisEOASpan);
+          //create input for address
+          var inputAddress = document.createElement("select");
+          var respectingAccounts = profileArray[3];
+          respectingAccounts.map((a) => {
+            //only add option if no note has already been sent
+            var alreadySent = false;
+            var sent = profileArray[6];
+            sent.map((b) => {
+              if (b.toLowerCase() == a.toLowerCase()) {
+                alreadySent = true;
+              }
+            });
+            if (!alreadySent) {
+              var thisOption = document.createElement("option");
+              thisOption.value = a;
+              thisOption.innerHTML = a;
+              console.log(a);
+              inputAddress.appendChild(thisOption);
             }
           });
-          if (!alreadySent) {
-            var thisOption = document.createElement("option");
-            thisOption.value = a;
-            thisOption.innerHTML = a;
-            console.log(a);
-            inputAddress.appendChild(thisOption);
-          }
-        });
-        inputAddress.setAttribute("type", "text");
-        inputAddress.setAttribute("placeholder", "Target Address");
-        inputAddress.setAttribute(
-          "class",
-          "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3",
-        );
-        inputAddress.setAttribute("data-field-edit", "associated-address");
-        thisNote.appendChild(inputAddress);
-        //create write button
-        var thisWrite = document.createElement("button");
-        thisWrite.setAttribute(
-          "class",
-          "mx-2 h-7 w-7 rounded-full bg-main p-0",
-        );
-        thisWrite.setAttribute("data-write", "");
-        var writeImg = document.createElement("img");
-        writeImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
-        writeImg.setAttribute("src", "./svg/write.svg");
-        writeImg.setAttribute("alt", "Wallet Logo");
-        thisWrite.appendChild(writeImg);
-        thisNote.appendChild(thisWrite);
-
-        thisWrite.addEventListener("click", () => {
-          console.log(
-            inputDesc.value,
-            ":",
-            inputAddress.value,
-            "was written to 1d index[",
-            indexTuple,
-            "and",
-            indexTuple + 1 + "]",
+          inputAddress.setAttribute("type", "text");
+          inputAddress.setAttribute("placeholder", "Target Address");
+          inputAddress.setAttribute(
+            "class",
+            "mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3",
           );
+          inputAddress.setAttribute("data-field-edit", "associated-address");
+          thisNote.appendChild(inputAddress);
+          //create write button
+          var thisWrite = document.createElement("button");
+          thisWrite.setAttribute(
+            "class",
+            "mx-2 h-7 w-7 rounded-full bg-main p-0",
+          );
+          thisWrite.setAttribute("data-write", "");
+          var writeImg = document.createElement("img");
+          writeImg.setAttribute("class", "m-auto h-3/5 w-3/5 object-contain");
+          writeImg.setAttribute("src", "./svg/write.svg");
+          writeImg.setAttribute("alt", "Wallet Logo");
+          thisWrite.appendChild(writeImg);
+          thisNote.appendChild(thisWrite);
 
-          console.log("sent new note entry to tuple 2d index", indexTuple);
-          setNoteToContract(inputAddress.value, inputDesc.value);
-        });
-        //populate
-        if (defaultAddress || defaultDesc) {
-          inputDesc.value = defaultDesc;
-          inputAddress.value = defaultAddress;
+          thisWrite.addEventListener("click", () => {
+            console.log(
+              inputDesc.value,
+              ":",
+              inputAddress.value,
+              "was written to 1d index[",
+              indexTuple,
+              "and",
+              indexTuple + 1 + "]",
+            );
+
+            console.log("sent new note entry to tuple 2d index", indexTuple);
+            setNoteToContract(inputAddress.value, inputDesc.value);
+          });
+          //populate
+          if (defaultAddress || defaultDesc) {
+            inputDesc.value = defaultDesc;
+            inputAddress.value = defaultAddress;
+          }
+        } else {
+          thisNote.textContent =
+            "To send a note, this account must first be respected by another account";
+          thisNote.className = "font-bold mb-6 bg-red-100 h-fit px-4 py-2";
         }
       }
 
