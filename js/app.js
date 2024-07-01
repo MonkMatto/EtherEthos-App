@@ -477,28 +477,24 @@ if (
                       return;
                     }
                   });
+                console.log(`pfp owner result ${pfpOwner}`);
 
                 console.log("PFP Owner: ", pfpOwner);
               } catch (errorMessage) {
                 error = true;
               }
               if (!error) {
-                if (
-                  pfpOwner.toLowerCase() == account
-                    ? account.toLowerCase()
-                    : account
-                ) {
+                if (pfpOwner.toLowerCase() == account.toLowerCase()) {
                   pfpVerified.textContent = "✔️ PFP Ownership Verified";
                   console.log("PFP Ownership Verified");
                 } else {
-                  pfpVerified.textContent =
-                    "✖️ PFP Not Owned by Account. The Verified Owner: ";
+                  pfpVerified.textContent = `✖️ PFP Not Owned by Account. The Verified Owner: ${pfpOwner.slice(0, 4)}-${pfpOwner.slice(-4)}`;
                   console.log(
                     "PFP Ownership Not Verified. Actual Owner: ",
                     pfpOwner,
                   );
-                  pfpActualOwner.style.display = "block";
-                  pfpActualOwner.textContent = pfpOwner;
+                  // pfpActualOwner.style.display = "block";
+                  // pfpActualOwner.textContent = pfpOwner;
                 }
               } else {
                 pfpVerified.textContent =
