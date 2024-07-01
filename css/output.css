@@ -733,6 +733,10 @@ video {
   margin-right: 1rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -743,10 +747,6 @@ video {
 
 .mt-6 {
   margin-top: 1.5rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
 }
 
 .block {
@@ -927,14 +927,6 @@ video {
   gap: 1rem;
 }
 
-.gap-5 {
-  gap: 1.25rem;
-}
-
-.gap-y-5 {
-  row-gap: 1.25rem;
-}
-
 .self-start {
   align-self: flex-start;
 }
@@ -1021,6 +1013,11 @@ video {
   background-color: rgb(252 236 218 / var(--tw-bg-opacity));
 }
 
+.bg-red-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+
 .bg-red-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity));
@@ -1029,16 +1026,6 @@ video {
 .bg-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(255 252 249 / var(--tw-bg-opacity));
-}
-
-.bg-red-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
-}
-
-.bg-red-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
 }
 
 .object-contain {
@@ -1065,10 +1052,6 @@ video {
 
 .p-8 {
   padding: 2rem;
-}
-
-.p-2 {
-  padding: 0.5rem;
 }
 
 .px-3 {
@@ -1208,24 +1191,19 @@ video {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
-.before\:mr-4::before {
-  content: var(--tw-content);
-  margin-right: 1rem;
-}
-
 .before\:mr-2::before {
   content: var(--tw-content);
   margin-right: 0.5rem;
 }
 
+.before\:mr-4::before {
+  content: var(--tw-content);
+  margin-right: 1rem;
+}
+
 .before\:inline-block::before {
   content: var(--tw-content);
   display: inline-block;
-}
-
-.before\:aspect-square::before {
-  content: var(--tw-content);
-  aspect-ratio: 1 / 1;
 }
 
 .before\:h-2::before {
@@ -1332,10 +1310,6 @@ video {
 
   .md\:flex-col {
     flex-direction: column;
-  }
-
-  .md\:flex-wrap {
-    flex-wrap: wrap;
   }
 
   .md\:items-start {
@@ -1628,31 +1602,5 @@ video {
 
   .lg\:font-medium {
     font-weight: 500;
-  }
-}
-
-@media (min-width: 1280px) {
-  .xl\:my-8 {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .xl\:w-3\/4 {
-    width: 75%;
-  }
-
-  .xl\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .xl\:px-24 {
-    padding-left: 6rem;
-    padding-right: 6rem;
-  }
-}
-
-@media (min-width: 1536px) {
-  .\32xl\:w-3\/4 {
-    width: 75%;
   }
 }

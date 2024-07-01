@@ -1,6 +1,6 @@
 let currentChainId = null;
 const web3Main = new Web3(
-  `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`,
+  `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
 );
 
 let currentChain = null;
@@ -8,62 +8,62 @@ let chainIndex = null;
 let currentAccount = null;
 window.sessionStorage.setItem("chainIDLoaded", false);
 
-// blast not yet supported
 let chains = [
   {
     name: "mainnet",
     id: 1,
     explorerBaseUrl: "https://etherscan.io/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
-    endpoint: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`,
+    endpoint: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
     name: "sepolia",
     id: 11155111,
     explorerBaseUrl: "https://sepolia.etherscan.io/address/",
     contractAddress: "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb",
-    endpoint: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`,
+    endpoint: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
     name: "optimism",
     id: 10,
     explorerBaseUrl: "https://optimistic.etherscan.io/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
-    endpoint: `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`,
+    endpoint: `https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
     name: "base",
     id: 8453,
     explorerBaseUrl: "https://basescan.org/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
-    endpoint: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`,
+    endpoint: `https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
     name: "arbitrum",
     id: 42161,
     explorerBaseUrl: "https://arbiscan.io/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
-    endpoint: `https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_ARBITRUM}`,
+    endpoint: `https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
     name: "polygon",
     id: 137,
     explorerBaseUrl: "https://polygonscan.com/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
-    endpoint: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_POLYGON}`,
+    endpoint: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
     name: "zora",
     id: 7777777,
     explorerBaseUrl: "https://zora.superscan.network/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
-    endpoint: `https://zora-mainnet.g.alchemy.com/v2/${ALCHEMY_ZORA}`,
+    endpoint: `https://zora-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
     name: "blast",
     id: 81457,
     explorerBaseUrl: "https://blastexplorer.io/address/",
     contractAddress: "0x1f4126A9D34811E55B9506F011aC1df1396ac909",
+    endpoint: `https://blast-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
 ];
 
