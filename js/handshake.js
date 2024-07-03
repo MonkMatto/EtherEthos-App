@@ -20,7 +20,7 @@ let chains = [
     name: "sepolia",
     id: 11155111,
     explorerBaseUrl: "https://sepolia.etherscan.io/address/",
-    contractAddress: "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb",
+    contractAddress: "0x0E6b7e647Ac52Fc636B678213dEbd0C21E0b1a58",
     endpoint: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   },
   {
@@ -126,33 +126,10 @@ function startApp(provider) {
     console.error("Do you have multiple wallets installed?");
     createErrorMsg("Error! Do you have multiple wallets installed?");
   }
-  web3User = new Web3(provider); // Initialize user's web3
 
-  // // in: chainID
-  // // out: contract address
-  // if (chainParams.has("chain")) {
-  //   //Find contract address based on search query
-  //   var findChainID = chains.find((o) => o.id === Number(chainParams.get("chain")));
-  //   chainIndex = chains.indexOf(findChainID);
-  //   EE_ADDRESS = chains[chainIndex].contractAddress;
-  // } else {
-  //   console.log("trying to use network from metamask");
-  //   if (currentChainId) {
-  //     //Find contract address based on wallet chainID
-  //     window.addEventListener("load", () => {
-  //       var findChainID = chains.find((o) => o.id === currentChainId);
-  //       chainIndex = chains.indexOf(findChainID);
-  //       console.log("chain index is " + chainIndex + ", it was found by searching for chain id " + currentChainId + " and is returning " + chains[chainIndex].contractAddress);
-  //       EE_ADDRESS = chains[chainIndex].contractAddress;
-  //       console.log("successfully used network from metamask, " + chains[chainIndex].name);
-  //     });
-  //   } else {
-  //     //Use default (mainnet)
-  //     console.log("defaulted to mainnet");
-  //     chainIndex = 0;
-  //     EE_ADDRESS = "0x1f4126A9D34811E55B9506F011aC1df1396ac909";
-  //   }
-  // }
+  // Initialize user's web3
+  web3User = new Web3(provider);
+
   // Now initialize the user's contract object
   EE_Contract_User = new web3User.eth.Contract(EE_ABI, EE_ADDRESS);
 
